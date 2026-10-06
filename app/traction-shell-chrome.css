@@ -1,0 +1,105 @@
+/* One typography and spacing contract for the panel chrome, including mobile portals. */
+.synky-shell .main-inset { container-type: inline-size; container-name: workspace; }
+.synky-shell .app-header,
+.synky-shell.reference-fidelity-shell .app-header,
+.synky-shell.reference-fidelity-shell.reference-full-canvas .app-header {
+  display: flex;
+  align-items: center;
+  min-height: 76px;
+  height: auto;
+  gap: 24px;
+  padding: 14px 28px;
+  background: #fff;
+  backdrop-filter: none;
+  box-shadow: none;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  letter-spacing: normal;
+}
+.synky-shell .app-header .header-left { flex: 1 1 220px; min-width: 0; gap: 16px; }
+.synky-shell .app-header .header-right { flex: 0 1 auto; min-width: 0; gap: 12px; }
+.synky-shell .app-header .menu-trigger { width: 36px; height: 36px; flex: none; color: #52636d; }
+.synky-shell .app-header .header-divider { height: 28px; flex: none; }
+.synky-shell .app-header :is(button,input) { font-family: inherit; letter-spacing: normal; }
+.synky-shell .app-header .workspace-header-context { display: grid; flex: 1; min-width: 0; gap: 6px; }
+.synky-shell .app-header .workspace-breadcrumb { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; min-width: 0; line-height: 1.4; }
+.synky-shell .app-header .workspace-breadcrumb > span { color: #64716e; font-size: 13px; font-weight: 400; }
+.synky-shell .app-header .workspace-breadcrumb i { color: #a1aba7; font-size: 13px; font-style: normal; }
+.synky-shell .app-header .workspace-breadcrumb strong { color: #19372b; font: 600 17px/1.4 "Segoe UI", Arial, sans-serif; overflow-wrap: anywhere; }
+.synky-shell .app-header .workspace-cycle-context { display: flex; align-items: center; gap: 8px; min-width: 0; margin: 0; line-height: 1.5; }
+.synky-shell .app-header .workspace-context-label { color: #77827e; font-size: 12px; font-weight: 400; flex: none; }
+.synky-shell .app-header .workspace-cycle-name { color: #52635c; font-size: 13px; font-weight: 400; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.synky-shell .app-header .workspace-cycle-status { color: #52635c; font-size: 12px; font-weight: 500; background: #f1f5f3; border: 1px solid #dfe7e2; border-radius: 5px; padding: 0 6px; flex: none; }
+.synky-shell .app-header .workspace-context-empty { margin: 0; color: #64716e; font-size: 13px; font-weight: 400; line-height: 1.5; }
+.synky-shell .app-header .org-switch { max-width: 190px; min-width: 0; height: 38px; }
+.synky-shell .app-header .org-switch [data-slot=select-value] { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.synky-shell .app-header .user-avatar { flex: none; }
+
+.premium-sidebar,
+.synky-shell.reference-fidelity-shell .premium-sidebar { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+.premium-sidebar .premium-sidebar-brand,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-sidebar-brand { height: auto; min-height: 100px; padding: 22px 18px 18px; gap: 10px; flex-shrink: 0; }
+.premium-sidebar .premium-product-logo,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-product-logo { height: auto; min-height: 30px; }
+.premium-sidebar .premium-product-logo img { display: block; width: 100%; height: auto; max-height: 46px; object-fit: contain; object-position: left; }
+.premium-sidebar .tenant-identity { display: grid; grid-template-columns: 36px minmax(0,1fr); align-items: start; gap: 10px; width: 100%; min-width: 0; }
+.premium-sidebar .tenant-identity-visual { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 9px; background: color-mix(in srgb,var(--tenant-primary,#0a7655),white 94%); color: var(--tenant-primary,#0a7655); }
+.premium-sidebar .tenant-identity-copy { display: grid; gap: 5px; min-width: 0; }
+.premium-sidebar .tenant-identity-copy > span { color: #6d7873; font-size: 12px; line-height: 1.4; font-weight: 400; }
+.premium-sidebar .tenant-company-name,
+.synky-shell.reference-fidelity-shell .premium-sidebar .tenant-company-name { display: block; color: #19372b; font: 600 15px/1.45 "Segoe UI", Arial, sans-serif; white-space: normal; overflow-wrap: anywhere; }
+.premium-sidebar .tenant-identity.has-logo { grid-template-columns: minmax(0,1fr); gap: 12px; }
+.premium-sidebar .tenant-identity.has-logo .tenant-identity-visual { width: 100%; height: auto; min-height: 32px; max-height: 48px; background: transparent; border-radius: 0; justify-items: start; }
+.premium-sidebar .tenant-identity-visual img { display: block; width: auto; max-width: 100%; max-height: 48px; height: auto; object-fit: contain; filter: none; }
+.premium-sidebar .premium-sidebar-brand .premium-product-caption,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-sidebar-brand .premium-product-caption { font-size: 13px; line-height: 1.5; font-weight: 400; color: #64716e; white-space: normal; overflow-wrap: anywhere; }
+.premium-sidebar .premium-nav-button,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-nav-button { min-height: 40px; height: auto !important; padding: 10px 12px; font: 400 14px/1.4 "Segoe UI", Arial, sans-serif; }
+.premium-sidebar .premium-nav-button[data-active=true],
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-nav-button[data-active=true] { font-weight: 600; }
+.premium-sidebar [data-slot=sidebar-group-label],
+.synky-shell.reference-fidelity-shell .premium-sidebar [data-slot=sidebar-group-label] { height: auto; min-height: 26px; padding: 6px 12px; font: 500 12px/1.4 "Segoe UI", Arial, sans-serif; letter-spacing: normal; text-transform: none; color: #6d7873; }
+.premium-sidebar .premium-sidebar-content [data-slot=sidebar-group] { padding-block: 6px; }
+.premium-sidebar .premium-account-copy strong,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-account-copy strong { font: 600 14px/1.4 "Segoe UI", Arial, sans-serif; }
+.premium-sidebar .premium-account-copy small,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-account-copy small { font: 400 12px/1.4 "Segoe UI", Arial, sans-serif; }
+.synky-shell [data-slot=sidebar][data-state=collapsed] .premium-sidebar-brand { min-height: 76px; height: 76px; padding: 22px 8px; }
+.synky-shell [data-slot=sidebar][data-state=collapsed] .tenant-identity { display: none; }
+.synky-shell [data-slot=sidebar][data-state=collapsed] .tenant-product-symbol { display: grid; place-items: center; color: var(--tenant-primary); }
+.premium-sidebar .tenant-product-symbol img { background: transparent; padding: 0; object-fit: contain; }
+
+@container workspace (max-width: 1080px) {
+  .synky-shell .app-header .user-avatar,
+  .synky-shell .app-header .reference-header-role { display: none; }
+  .synky-shell .app-header .header-utility { width: 36px; min-width: 36px; padding: 0 !important; }
+  .synky-shell .app-header .header-utility span { display: none; }
+  .synky-shell .app-header .header-right .search-box { width: 180px; }
+}
+@container workspace (max-width: 800px) {
+  .synky-shell .app-header,
+  .synky-shell.reference-fidelity-shell .app-header,
+  .synky-shell.reference-fidelity-shell.reference-full-canvas .app-header { flex-wrap: wrap; gap: 12px; padding: 14px 20px; }
+  .synky-shell .app-header .header-left { flex-basis: 100%; }
+  .synky-shell .app-header .header-right { flex: 1 1 100%; gap: 10px; padding-top: 12px; border-top: 1px solid #edf1ee; }
+  .synky-shell .app-header .header-right .search-box,
+  .synky-shell .app-header .header-right .search-box:focus-within { flex: 1 1 160px; width: auto; min-width: 0; gap: 8px; padding-inline: 10px; }
+  .synky-shell .app-header .org-switch { flex: 1 1 140px; width: auto; max-width: 210px; padding: 0 10px; }
+  .synky-shell .app-header .org-switch [data-slot=select-value] { display: inline; }
+  .synky-shell .app-header .org-switch > svg:last-child { display: block; flex: none; }
+}
+@container workspace (max-width: 480px) {
+  .synky-shell .app-header,
+  .synky-shell.reference-fidelity-shell .app-header,
+  .synky-shell.reference-fidelity-shell.reference-full-canvas .app-header { padding: 12px 16px; }
+  .synky-shell .app-header .header-left { gap: 12px; }
+  .synky-shell .app-header .header-divider { display: none; }
+  .synky-shell .app-header .workspace-breadcrumb { gap: 6px; }
+  .synky-shell .app-header .workspace-breadcrumb > span { display: none; }
+  .synky-shell .app-header .workspace-breadcrumb i { display: none; }
+  .synky-shell .app-header .workspace-breadcrumb strong { font-size: 16px; }
+  .synky-shell .app-header .header-right { gap: 8px; }
+  .synky-shell .app-header .header-right .search-box { flex-basis: 100px; }
+  .synky-shell .app-header .org-switch { flex-basis: 110px; max-width: 140px; }
+  .synky-shell .app-header .header-right > a[data-slot=button] { flex: 1; min-width: 0; white-space: normal; height: auto; min-height: 38px; text-align: center; }
+}
+@media print { .synky-shell .app-header { display: none !important; } }

@@ -42,7 +42,7 @@ import { StructureEntry } from "./traction-structure-entry";
 import "./traction-structure-entry.css";
 import { HiringEntry } from "./traction-hiring-entry";
 import "./traction-hiring-entry.css";
-import { SynkyLogo } from "./synky-logo";
+import { WorkspaceContext } from "./traction-workspace-context";
 import { AdminEntry } from "./traction-admin-entry";
 import "./traction-admin-entry.css";
 import { GrowthEntry } from "./traction-growth-entry";
@@ -56,6 +56,7 @@ import "./traction-module-heading.css";
 import "./traction-workspace-spacing.css";
 import { TeamPersonDialog, TeamTaskDialog } from "./traction-team";
 import "./traction-team.css";
+import "./traction-shell-chrome.css";
 
 const nav: { id: Section; label: string; description: string; icon: typeof LayoutDashboard; group: string }[] = [
   { id: "overview", label: "Dashboard", description: "Visão geral e próximos passos", icon: LayoutDashboard, group: "COMEÇAR" },
@@ -514,13 +515,13 @@ export default function TractionApp({ displayName, preview = false, isMaster = f
   const referenceCompanies = isMaster && masterView;
   const brandStyle = { "--tenant-primary": panelBrand.primary, "--tenant-sidebar": panelBrand.sidebar, "--sidebar": panelBrand.sidebar, "--primary": panelBrand.primary, "--primary-foreground": "#ffffff", "--ring": panelBrand.primary } as React.CSSProperties;
   const referenceFullCanvas = referenceCompanies || referenceCycleEntry || referenceMeetingsEntry || referenceResultsEntry || referenceStructureEntry || referenceHiringEntry || referenceGrowthEntry || referenceAdminEntry;
-  return <SidebarProvider open={referenceMenuOpen} onOpenChange={setReferenceMenuOpen} className={`synky-shell ${referenceDashboard || referenceFullCanvas ? "reference-fidelity-shell" : ""} ${referenceFullCanvas ? "reference-full-canvas" : ""} ${referenceDashboard ? "dashboard-reference-shell" : ""} ${referenceCompanies ? "company-directory-shell" : ""} ${referenceCycleEntry ? "cycle-entry-shell" : ""} ${referenceMeetingsEntry ? "meetings-entry-shell" : ""} ${referenceResultsEntry ? "results-entry-shell" : ""} ${referenceStructureEntry ? "structure-entry-shell" : ""} ${referenceHiringEntry ? "hiring-entry-shell" : ""} ${referenceGrowthEntry ? "growth-entry-shell" : ""} ${referenceAdminEntry ? "admin-entry-shell" : ""}`} style={{ ...brandStyle, "--sidebar-width": "clamp(188px, 19.5vw, 240px)" } as React.CSSProperties}>
+  return <SidebarProvider open={referenceMenuOpen} onOpenChange={setReferenceMenuOpen} className={`synky-shell ${referenceDashboard || referenceFullCanvas ? "reference-fidelity-shell" : ""} ${referenceFullCanvas ? "reference-full-canvas" : ""} ${referenceDashboard ? "dashboard-reference-shell" : ""} ${referenceCompanies ? "company-directory-shell" : ""} ${referenceCycleEntry ? "cycle-entry-shell" : ""} ${referenceMeetingsEntry ? "meetings-entry-shell" : ""} ${referenceResultsEntry ? "results-entry-shell" : ""} ${referenceStructureEntry ? "structure-entry-shell" : ""} ${referenceHiringEntry ? "hiring-entry-shell" : ""} ${referenceGrowthEntry ? "growth-entry-shell" : ""} ${referenceAdminEntry ? "admin-entry-shell" : ""}`} style={{ ...brandStyle, "--sidebar-width": "clamp(224px, 21vw, 256px)" } as React.CSSProperties}>
     <Toaster richColors position="bottom-right" />
     <TractionNavigation displayName={displayName} items={nav.filter(item => canSeeSection(item.id, workspace?.role || (isMaster ? "admin" : undefined)))} section={section} navigate={navigateTo} workspace={workspace} loading={loading} preview={preview} onCreateOrganization={createOrganization} isMaster={isMaster} masterView={masterView} onMaster={showCompanies} />
     <SidebarInset className="main-inset">
       <header className="app-header">
-        <div className="header-left"><SidebarTrigger aria-label="Abrir menu" className="menu-trigger" /><span className="header-divider" />{referenceFullCanvas && <><span className="reference-header-brand"><SynkyLogo /></span><span className="header-divider reference-brand-divider" /></>}
-          <div className="header-workspace-context">{referenceAdminEntry ? <span>Configurações <i aria-hidden="true">/</i> <b>Administração</b></span> : referenceGrowthEntry ? <span>Pessoas <i aria-hidden="true">/</i> <b>Evolução interna</b></span> : referenceHiringEntry ? <span>Pessoas <i aria-hidden="true">/</i> <b>Contratações</b></span> : referenceStructureEntry ? <span>Estrutura da empresa <i aria-hidden="true">/</i> <b>Áreas e cargos</b></span> : referenceResultsEntry ? <span>Gestão e execução <i aria-hidden="true">/</i> <b>Resultados</b></span> : referenceMeetingsEntry ? <span>Gestão e execução <i aria-hidden="true">/</i> <b>Reuniões e decisões</b></span> : referenceCycleEntry ? <span>Gestão e execução <i aria-hidden="true">/</i> <b>Plano do ciclo</b></span> : referenceCompanies ? <span>Todas as empresas <i aria-hidden="true">/</i> <b>Central de empresas</b></span> : referenceDashboard ? <span>Visão geral <i aria-hidden="true">/</i> Dashboard</span> : <><strong>{masterView ? "Administração master" : workspace?.organization.name || (isMaster ? "Admin master" : preview ? "Prévia pública" : "Sem empresa vinculada")}</strong><span>{masterView ? "Todas as empresas" : activeCycle ? `${activeCycle.title} · ${activeCycle.data.status}` : workspace ? "Ciclo ainda não definido" : isMaster ? "Acesso global" : "Configuração inicial"} <i aria-hidden="true">/</i> {masterView ? "Central de empresas" : nav.find((item) => item.id === section)?.label}</span></>}</div>
+        <div className="header-left"><SidebarTrigger aria-label="Abrir menu" className="menu-trigger" /><span className="header-divider" />
+          <WorkspaceContext section={section} masterView={masterView} hasCompany={!!workspace} preview={preview} isMaster={isMaster} cycle={activeCycle ? { title: activeCycle.title, status: activeCycle.data.status } : undefined} />
         </div>
         <div className="header-right">{preview ? <><Button variant="outline" size="sm" asChild><a href="/">Voltar ao site</a></Button><Button className="action-primary" size="sm" asChild><a href="/login">Entrar no painel</a></Button></> : <>
           {!masterView && workspace && <div className="search-box"><Search size={17} /><Input aria-label="Buscar registros" placeholder="Buscar registros" value={search} onChange={(event) => { setSearch(event.target.value); window.scrollTo(0, 0); }} />{search && <button aria-label="Limpar busca" onClick={() => setSearch("")}><X size={14} /></button>}</div>}

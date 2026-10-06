@@ -19,10 +19,12 @@ export function TractionNavigation(props: Props) {
   const company = !masterView ? workspace?.organization : undefined;
   return <Sidebar collapsible="icon" className="synky-sidebar premium-sidebar" style={{ "--tenant-sidebar": company?.brand_sidebar || defaultBrand.sidebar, "--tenant-primary": company?.brand_primary || defaultBrand.primary } as React.CSSProperties}>
     <SidebarHeader className="premium-sidebar-brand">
-      <div className={`premium-product-logo ${company ? "tenant-product-logo" : ""}`}>{company ? company.brand_logo_url ? <img src={company.brand_logo_url} alt={`Logo de ${company.name}`} /> : <strong className="tenant-company-wordmark" title={company.name}>{company.name}</strong> : <SynkyLogo />}</div>
-      <div className="premium-product-symbol">{company ? <span className="tenant-product-symbol">{company.brand_logo_url ? <img src={company.brand_logo_url} alt={`Logo de ${company.name}`} /> : company.name[0].toUpperCase()}</span> : <SynkySymbol />}</div>
-      {company?.brand_logo_url && <div className="premium-company"><span><strong title={company.name}>{company.name}</strong></span></div>}
-      <span className="premium-product-caption">{company ? company.brand_tagline || "Seu espaço no Synky Traction" : "Pessoas, estrutura e resultados"}</span>
+      {company ? <div className={`tenant-identity ${company.brand_logo_url ? "has-logo" : ""}`}>
+        <div className="tenant-identity-visual">{company.brand_logo_url ? <img src={company.brand_logo_url} alt={`Logo de ${company.name}`} /> : <Building2 size={22} aria-hidden="true" />}</div>
+        <div className="tenant-identity-copy"><span>Empresa ativa</span><strong className="tenant-company-name" title={company.name}>{company.name}</strong></div>
+      </div> : <div className="premium-product-logo"><SynkyLogo /></div>}
+      <div className="premium-product-symbol">{company ? <span className="tenant-product-symbol" title={company.name}>{company.brand_logo_url ? <img src={company.brand_logo_url} alt={`Logo de ${company.name}`} /> : <Building2 size={22} aria-label={company.name} />}</span> : <SynkySymbol />}</div>
+      {(!company || company.brand_tagline) && <span className="premium-product-caption">{company ? company.brand_tagline : "Pessoas, estrutura e resultados"}</span>}
     </SidebarHeader>
     <SidebarContent className="premium-sidebar-content">
       {["COMEÇAR", "PLANEJAR", "PESSOAS"].map(group => {
