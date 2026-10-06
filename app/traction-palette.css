@@ -15,6 +15,8 @@
 }
 .synky-shell, .synky-shell .main-inset { background: var(--workspace-page); }
 .synky-shell .app-header, .premium-sidebar, .premium-sidebar [data-slot=sidebar-inner] { background: var(--workspace-surface) !important; border-color: var(--workspace-line); }
+/* The sidebar divider stays neutral when a company changes its brand colours. */
+.synky-shell .synky-sidebar { border-right-color: var(--workspace-line); box-shadow: none; }
 .synky-shell :is(h1, .header-section, .header-location strong, .workspace-chip, .dashboard-module-title), .premium-sidebar :is(.tenant-company-wordmark, .premium-company strong, .premium-account-copy strong) { color: var(--workspace-ink); }
 .synky-shell :is(.page-title-row > div > p, .header-location, .metric-label, .practice-footer, .practice-permission, .practice-questions p, .practice-rules p), .premium-sidebar .premium-sidebar-brand .premium-product-caption, .premium-sidebar :is([data-slot=sidebar-group-label], .premium-account-copy small) { color: var(--workspace-muted); }
 .synky-shell :is(.page-eyebrow, .section-label) { color: var(--workspace-muted); }
