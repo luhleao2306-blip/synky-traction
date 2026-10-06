@@ -4,7 +4,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { ArrowRight, BarChart3, BookOpenText, BriefcaseBusiness, Building2, CalendarRange, GitBranch, KeyRound, LayoutDashboard, LogOut, Search, Settings2, ShieldCheck, TrendingUp, UserRound, UsersRound, X } from "lucide-react";
+import { ArrowRight, ClipboardList, BarChart3, BookOpenText, BriefcaseBusiness, Building2, CalendarRange, GitBranch, KeyRound, LayoutDashboard, LogOut, Search, Settings2, ShieldCheck, TrendingUp, UserRound, UsersRound, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -54,6 +54,8 @@ import "./traction-reference-fidelity.css";
 import { ModuleHeading, moduleIntros, companyIntro } from "./traction-module-heading";
 import "./traction-module-heading.css";
 import "./traction-workspace-spacing.css";
+import { TeamPersonDialog, TeamTaskDialog } from "./traction-team";
+import "./traction-team.css";
 
 const nav: { id: Section; label: string; description: string; icon: typeof LayoutDashboard; group: string }[] = [
   { id: "overview", label: "Dashboard", description: "Visão geral e próximos passos", icon: LayoutDashboard, group: "COMEÇAR" },
@@ -62,12 +64,14 @@ const nav: { id: Section; label: string; description: string; icon: typeof Layou
   { id: "reviews", label: "Reuniões e decisões", description: "Resolva impedimentos", icon: CalendarRange, group: "PLANEJAR" },
   { id: "results", label: "Resultados", description: "O que os registros mostram", icon: BarChart3, group: "PLANEJAR" },
   { id: "structure", label: "Áreas e cargos", description: "Critérios para pessoas", icon: GitBranch, group: "PESSOAS" },
+  { id: "team", label: "Equipe", description: "Colaboradores, acessos e tarefas", icon: UserRound, group: "PESSOAS" },
   { id: "hiring", label: "Contratações", description: "Vagas e avaliações", icon: BriefcaseBusiness, group: "PESSOAS" },
   { id: "promotions", label: "Evolução interna", description: "Promoções e planos", icon: UsersRound, group: "PESSOAS" },
   { id: "admin", label: "Administração", description: "Marca, acessos e dados", icon: Settings2, group: "SISTEMA" },
 ];
 
 const moduleForKind: Record<RecordKind, { section: Section; label: string }> = {
+  teamTask: { section: "team", label: "Equipe · tarefas" },
   cycle: { section: "planning", label: "Plano do ciclo" }, objective: { section: "planning", label: "Plano do ciclo" }, priority: { section: "planning", label: "Plano do ciclo" },
   result: { section: "planning", label: "Resultados do ciclo" }, progress: { section: "planning", label: "Atualizações" }, initiative: { section: "planning", label: "Iniciativas" }, risk: { section: "reviews", label: "Reuniões e decisões" }, decision: { section: "reviews", label: "Reuniões e decisões" }, review: { section: "reviews", label: "Reuniões e decisões" }, updateRequest: { section: "reviews", label: "Reuniões e decisões" },
   area: { section: "structure", label: "Áreas e cargos" }, role: { section: "structure", label: "Áreas e cargos" }, vacancy: { section: "hiring", label: "Contratações" }, person: { section: "hiring", label: "Pessoas" }, assessment: { section: "hiring", label: "Avaliações" }, development: { section: "promotions", label: "Evolução interna" },
@@ -90,13 +94,13 @@ const memberRoleDescriptions: Record<string, string> = {
 
 function recordModule(record: TractionRecord) {
   if (record.kind === "person" || record.kind === "assessment") return record.data.type === "Colaborador" || record.data.type === "Promoção"
-    ? { section: "promotions" as Section, label: "Evolução interna" } : { section: "hiring" as Section, label: "Contratações" };
+    ? record.kind === "person" ? { section: "team" as Section, label: "Equipe" } : { section: "promotions" as Section, label: "Evolução interna" } : { section: "hiring" as Section, label: "Contratações" };
   return moduleForKind[record.kind];
 }
 
 function scopeFor(record: TractionRecord) {
   const section = recordModule(record).section;
-  return ["hiring", "promotions", "structure"].includes(section) ? "people" : section === "reviews" ? "meetings" : "planning";
+  return ["hiring", "promotions", "structure", "team"].includes(section) ? "people" : section === "reviews" ? "meetings" : "planning";
 }
 
 
@@ -146,6 +150,8 @@ export default function TractionApp({ displayName, preview = false, isMaster = f
   const [currentPassword, setCurrentPassword] = useState("");
   const [nextPassword, setNextPassword] = useState("");
   const [saving, setSaving] = useState(false);
+  const [teamTaskTarget, setTeamTaskTarget] = useState<TractionRecord | null>(null);
+  const [teamPerson, setTeamPerson] = useState<TractionRecord | "new" | null>(null);
   const [companySetupOpen, setCompanySetupOpen] = useState(false);
   const [recordInitial, setRecordInitial] = useState<{title:string;data:Record<string,string>}>({title:"",data:{}});
   const [memberInitial,setMemberInitial] = useState({email:"",role:"leitor",area:""});
@@ -273,6 +279,7 @@ export default function TractionApp({ displayName, preview = false, isMaster = f
   function createRecord(nextKind: RecordKind, nextPersonType: PersonType = section === "promotions" ? "Colaborador" : "Candidato", preset: Record<string, string> = {}) {
     if (demo) { createOrganization(); return; }
     if (!canCreate(nextKind)) { toast.error("Sua função não permite criar este registro."); return; }
+    if (nextKind === "person" && nextPersonType === "Colaborador") { setTeamPerson("new"); return; }
     setKind(nextKind); setPersonType(nextPersonType); setSelected(null); setTitle("");
     const defaults: Record<string, string> = {};
     if (workspace?.areaId) defaults.areaId = workspace.areaId;
@@ -339,6 +346,7 @@ export default function TractionApp({ displayName, preview = false, isMaster = f
   }
 
   function openRecord(record: TractionRecord) {
+    if (record.kind === "teamTask") { setTeamTaskTarget(record); return; }
     setSelected(record); setKind(record.kind); setTitle(record.title); setData(record.data);
     setPersonType(record.data.type === "Colaborador" || record.data.type === "Promoção" ? "Colaborador" : "Candidato");
     setDialog("detail");
@@ -346,6 +354,7 @@ export default function TractionApp({ displayName, preview = false, isMaster = f
 
   function editSelected() {
     if (!selected || demo || !canEdit) return;
+    if (selected.kind === "person" && selected.data.type === "Colaborador") { setDialog(null); setTeamPerson(selected); return; }
     setRecordInitial({title:selected.title,data:selected.data});
     setDialog("record");
   }
@@ -536,7 +545,7 @@ export default function TractionApp({ displayName, preview = false, isMaster = f
           : isMaster && !workspace && section !== "guide" ? <MasterConsole displayName={displayName} onModules={() => navigateTo("overview")} onGuide={() => navigateTo("guide")} organizations={organizations} module={moduleIntros[section].title} onOpen={switchOrganization} onCreate={createOrganization} onRefresh={async () => { try { await loadOrganizations(); } catch (error) { toast.error(error instanceof Error ? error.message : "Não foi possível atualizar as empresas."); } }} />
           : !workspace && !preview && !isMaster && section !== "guide" ? <WorkspaceSetup section={section} onCreate={createOrganization} onRefresh={async () => { const orgs = await loadOrganizations(); if (orgs.length) await loadWorkspace(orgs[0].id); else toast.info("Seu acesso ainda não foi cadastrado por uma empresa."); }} />
           : search ? <div className="panel search-results"><div className="search-scope" role="group" aria-label="Filtrar resultados por área">{([ ["all", "Tudo"], ["planning", "Plano"], ["meetings", "Reuniões"], ["people", "Pessoas"] ] as const).map(([value, label]) => <button key={value} type="button" className={searchScope === value ? "active" : ""} aria-pressed={searchScope === value} onClick={() => setSearchScope(value)}>{label}</button>)}</div>{searchResults.length ? searchResults.map((record) => { const destination = recordModule(record); return <button key={record.id} className="search-result" onClick={() => { setSection(canSeeSection(destination.section, workspace?.role) ? destination.section : "overview"); setSearch(""); openRecord(record); }}><span className="search-result-module">{destination.label} / {labelFor(record.kind)}</span><strong>{record.title}</strong><span>{record.data.status || record.data.mission || record.data.outcome || record.data.evidence || "Abrir registro"}</span><ArrowRight size={16} /></button>; }) : <div className="empty-note">Nenhum registro nesta área. Tente outra palavra ou escolha “Tudo”.</div>}</div>
-          : <>{isMaster && !workspace && section !== "guide" && <section className="master-module-context" aria-label="Contexto da empresa"><div><ShieldCheck size={20} /><span><strong>Nenhuma empresa selecionada</strong><small>{organizations.length ? "Selecione uma empresa para consultar e editar os registros deste módulo." : "Seu acesso master está ativo. Cadastre uma empresa real para começar a usar os registros."}</small></span></div><Button size="sm" variant="outline" onClick={() => { setMasterView(true); setSearch(""); }}>{organizations.length ? "Selecionar empresa" : "Central de empresas"}</Button><Button size="sm" className="action-primary" onClick={createOrganization}>Cadastrar empresa</Button></section>}<WorkspaceSections key={workspace?.organization.id || "preview"} section={section} records={records} workspace={workspace} demo={demo} onCreate={createRecord} canCreate={canCreate} onOpen={openRecord} onNavigate={navigateTo} onCreateOrganization={createOrganization} onExport={exportData} onPrint={() => window.print()} onPost={(payload) => post(payload)} onReload={reload} onManageMember={manageMember} onRemoveMember={setRemoveMemberTarget} onProvisionMember={provisionMember} /></>}
+          : <>{isMaster && !workspace && section !== "guide" && <section className="master-module-context" aria-label="Contexto da empresa"><div><ShieldCheck size={20} /><span><strong>Nenhuma empresa selecionada</strong><small>{organizations.length ? "Selecione uma empresa para consultar e editar os registros deste módulo." : "Seu acesso master está ativo. Cadastre uma empresa real para começar a usar os registros."}</small></span></div><Button size="sm" variant="outline" onClick={() => { setMasterView(true); setSearch(""); }}>{organizations.length ? "Selecionar empresa" : "Central de empresas"}</Button><Button size="sm" className="action-primary" onClick={createOrganization}>Cadastrar empresa</Button></section>}{workspace && section === "overview" && activeRecords.some(r=>r.kind==="teamTask" && r.data.ownerEmail===workspace.currentUser.email && !["Concluída","Cancelada"].includes(r.data.status)) && <section className="team-dashboard-inbox"><ClipboardList size={22}/><div><strong>Você tem tarefas da equipe para acompanhar</strong><p>Confira as entregas e os prazos combinados.</p></div><Button variant="outline" onClick={()=>navigateTo("team")}>Ver minhas tarefas<ArrowRight size={16}/></Button></section>}<WorkspaceSections key={workspace?.organization.id || "preview"} section={section} records={records} workspace={workspace} demo={demo} onCreate={createRecord} canCreate={canCreate} onOpen={openRecord} onNavigate={navigateTo} onCreateOrganization={createOrganization} onExport={exportData} onPrint={() => window.print()} onPost={(payload) => post(payload)} onReload={reload} onManageMember={manageMember} onRemoveMember={setRemoveMemberTarget} onProvisionMember={provisionMember} /></>}
       </div>
     </SidebarInset>
 
@@ -549,6 +558,8 @@ export default function TractionApp({ displayName, preview = false, isMaster = f
     </DialogContent></Dialog>
 
     <AlertDialog open={discardOpen} onOpenChange={setDiscardOpen}><AlertDialogContent className="synky-dialog" style={brandStyle}><AlertDialogHeader><AlertDialogTitle>Descartar o preenchimento?</AlertDialogTitle><AlertDialogDescription>Há alterações que ainda não foram salvas. Você pode continuar preenchendo ou fechar sem gravar.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Continuar preenchendo</AlertDialogCancel><Button variant="outline" onClick={()=>{setDiscardOpen(false);setDialog(null);}}>Descartar alterações</Button></AlertDialogFooter></AlertDialogContent></AlertDialog>
+    {teamTaskTarget && <TeamTaskDialog props={{records,workspace,onPost:post,onReload:reload,onManageMember:manageMember}} people={activeRecords.filter(r=>r.kind==="person" && r.data.type==="Colaborador")} task={teamTaskTarget} onClose={()=>setTeamTaskTarget(null)}/>}
+    {teamPerson && <TeamPersonDialog props={{ records, workspace, onPost: post, onReload: reload, onManageMember: manageMember }} person={teamPerson === "new" ? undefined : teamPerson} onClose={() => setTeamPerson(null)} />}
     {companySetupOpen && <CompanySetupDialog onClose={() => setCompanySetupOpen(false)} onComplete={openCreatedCompany} />}
     <Dialog open={passwordOpen} onOpenChange={(open) => { setPasswordOpen(open); if (!open) { setCurrentPassword(""); setNextPassword(""); } }}><DialogContent className="synky-dialog" style={brandStyle}><DialogHeader><DialogTitle>Alterar minha senha</DialogTitle><DialogDescription>Depois da troca, entre novamente com a nova senha.</DialogDescription></DialogHeader><div className="credential-details"><label>Senha atual<Input type="password" autoComplete="current-password" value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} /></label><label>Nova senha (mínimo 12 caracteres)<Input type="password" autoComplete="new-password" value={nextPassword} onChange={(event) => setNextPassword(event.target.value)} /></label></div><div className="dialog-actions"><Button variant="outline" onClick={() => setPasswordOpen(false)}>Cancelar</Button><Button disabled={saving || !currentPassword || nextPassword.length < 12} onClick={changePassword}>Salvar senha</Button></div></DialogContent></Dialog>
     <AlertDialog open={!!newCredential} onOpenChange={(open) => { if (!open) setNewCredential(null); }}><AlertDialogContent className="synky-dialog" style={brandStyle}><AlertDialogHeader><AlertDialogTitle>Login criado</AlertDialogTitle><AlertDialogDescription>Copie estes dados agora e compartilhe com a pessoa de forma segura. A senha não poderá ser consultada depois.</AlertDialogDescription></AlertDialogHeader><div className="credential-details"><label>Email<Input readOnly value={newCredential?.email || ""} /></label><label>Senha inicial<Input readOnly value={newCredential?.password || ""} onFocus={(event) => event.target.select()} /></label></div><AlertDialogFooter><Button variant="outline" onClick={() => { if (newCredential) navigator.clipboard.writeText("Email: " + newCredential.email + "\nSenha: " + newCredential.password).then(() => toast.success("Dados copiados.")).catch(() => toast.error("Não foi possível copiar.")); }}>Copiar dados</Button><Button onClick={() => setNewCredential(null)}>Concluído</Button></AlertDialogFooter></AlertDialogContent></AlertDialog>

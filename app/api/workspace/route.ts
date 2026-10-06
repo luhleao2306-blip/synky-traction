@@ -6,6 +6,7 @@ import { buildTractionReport } from "@/lib/traction-report";
 import { reviewAgenda } from "@/lib/traction-flow";
 import { defaultBrand, validBrandColor } from "@/lib/traction-brand";
 import { readBrandLogo } from "@/lib/traction-logo";
+import { teamOperation } from "@/lib/traction-team";
 
 export const dynamic = "force-dynamic";
 
@@ -44,6 +45,7 @@ const statusValues: Partial<Record<RecordKind, readonly string[]>> = {
   review: ["Preparação", "Concluída"],
   vacancy: ["Planejada", "Aberta", "Entrevistas", "Decisão", "Fechada"],
   development: ["Planejado", "Em andamento", "Concluído"],
+  teamTask: ["Pendente", "Em andamento", "Concluída", "Cancelada"],
 };
 const dateFields = ["startDate", "endDate", "due", "openingDate", "assessedAt", "meetingDate", "nextReview", "periodStart", "periodEnd", "observedAt", "decidedAt", "closedAt"];
 function validDate(value: string) {
@@ -134,6 +136,7 @@ async function validateBusinessRules(kind: RecordKind, data: Record<string, stri
   if (kind === "vacancy" && !data.roleId) return "Vincule a vaga a um cargo.";
   if (kind === "vacancy" && data.areaId && areaOf(byId.get(data.roleId)!, byId) !== data.areaId) return "A área da vaga deve corresponder à área do cargo.";
   if (kind === "person" && !["Candidato", "Colaborador"].includes(data.type)) return "Selecione o vínculo da pessoa.";
+  if (kind === "person" && data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return "Informe um email válido para a pessoa.";
   if (kind === "person" && data.vacancyId && data.type !== "Candidato") return "Apenas candidatos podem ser vinculados a vagas.";
   if (kind === "person" && data.areaId && data.currentRoleId && areaOf(byId.get(data.currentRoleId)!, byId) !== data.areaId) return "O cargo atual deve pertencer à área da pessoa.";
   if (kind === "person" && data.areaId && data.vacancyId && areaOf(byId.get(data.vacancyId)!, byId) !== data.areaId) return "A vaga deve pertencer à área da pessoa.";
@@ -141,7 +144,7 @@ async function validateBusinessRules(kind: RecordKind, data: Record<string, stri
     if (!data.personId || !data.roleId || !data.evidence) return "Selecione pessoa, cargo e registre evidências.";
     if (!["Contratação", "Promoção"].includes(data.type)) return "Selecione o tipo de avaliação.";
     const person = byId.get(data.personId);
-    if (!person || person.data.type !== (data.type === "Promoção" ? "Colaborador" : "Candidato")) return "A pessoa não corresponde ao tipo de avaliação.";
+    if (!person || (person.data.type !== (data.type === "Promoção" ? "Colaborador" : "Candidato") && !(data.type === "Contratação" && (person.data.hiredAt || person.data.hiredFromVacancyId)))) return "A pessoa não corresponde ao tipo de avaliação.";
     if (data.decision && !["Em análise", "Avançar", "Aguardar", "Não avançar"].includes(data.decision)) return "Selecione uma decisão válida.";
     if (person.data.vacancyId && byId.get(person.data.vacancyId)?.data.roleId !== data.roleId) return "O cargo avaliado deve corresponder à vaga da pessoa.";
     if (person.data.vacancyId && data.vacancyId && person.data.vacancyId !== data.vacancyId) return "A vaga avaliada deve corresponder à candidatura da pessoa.";
@@ -191,8 +194,8 @@ export async function GET(request: Request) {
     if (url.searchParams.get("report") === "1") {
       return Response.json(buildTractionReport(records, organization.name, reportPlan), { headers: { "cache-control": "private, no-store" } });
     }
-    const memberships = member.role !== "leitor" ? (await db().prepare("SELECT m.email, m.name, m.role, m.area_id, m.user_id, EXISTS(SELECT 1 FROM app_users u WHERE u.email = m.email) AS has_account FROM memberships m WHERE m.organization_id = ? ORDER BY m.created_at")
-      .bind(organizationId).all()).results : [];
+    const memberships = (await db().prepare("SELECT m.email, m.name, m.role, m.area_id, m.user_id, EXISTS(SELECT 1 FROM app_users u WHERE u.email = m.email) AS has_account FROM memberships m WHERE m.organization_id = ? AND (? = 'admin' OR m.email = ? OR (? = 'gestor' AND m.area_id = ?)) ORDER BY m.created_at")
+      .bind(organizationId, member.role, user.email.toLowerCase(), member.role, member.area_id).all()).results;
     const audit = member.role === "admin" ? (await db().prepare("SELECT id, record_id, action, actor, created_at, before, after FROM audit_events WHERE organization_id = ? ORDER BY created_at DESC, rowid DESC LIMIT 120")
       .bind(organizationId).all<AuditRow>()).results : [];
     const { report_access_until: _reportAccessUntil, brand_logo_key: logoKey, brand_logo_type: _logoType, ...publicOrganization } = organization;
@@ -278,6 +281,9 @@ export async function POST(request: Request) {
     if (!member) return fail("Acesso não autorizado a esta empresa.", 403);
     const complete = await allRecords(organizationId);
     const byId = new Map(complete.map((record) => [record.id, record]));
+
+    const teamResult = await teamOperation(body, { db: db(), user, member, organizationId, records: complete });
+    if (teamResult) return teamResult;
 
     if (action === "updateOrganization") {
       if (member.role !== "admin") return fail("Apenas administradores podem alterar a empresa.", 403);
@@ -399,6 +405,29 @@ export async function POST(request: Request) {
       if (kind === "cycle" && data.status === "Encerrado") data.closedAt = new Date().toISOString().slice(0, 10);
       const id = action === "createRecord" ? crypto.randomUUID() : value(body.id, 80);
       const current = action === "updateRecord" ? byId.get(id) : null;
+      if (kind === "person") {
+        data.email = data.email.toLowerCase();
+        if (current?.data.type === "Colaborador") return fail("Altere o colaborador pelo módulo Equipe para manter cargo e acesso sincronizados.", 409);
+        if (data.type === "Colaborador" || data.status === "Contratado") {
+          const vacancy = byId.get(data.vacancyId || current?.data.vacancyId || "");
+          return teamOperation({ ...body, action: current ? "hirePerson" : "saveTeamPerson", requestId: crypto.randomUUID(), data: { ...data, currentRoleId: data.currentRoleId || vacancy?.data.roleId, status: "Ativo", startDate: data.startDate || new Date().toISOString().slice(0, 10) } }, { db: db(), user, member, organizationId, records: complete });
+        }
+      }
+      if (kind === "teamTask") {
+        const assignee = byId.get(data.personId);
+        if (!assignee || assignee.kind !== "person" || assignee.archived_at || assignee.data.type !== "Colaborador" || assignee.data.status === "Desligado") return fail("Escolha um colaborador ativo da equipe.");
+        if (!current && !["admin", "gestor"].includes(member.role)) return fail("Somente administradores e gestores podem atribuir tarefas.", 403);
+        if (current && !["admin", "gestor"].includes(member.role) && (title !== current.title || (data.status === "Cancelada" && current.data.status !== "Cancelada"))) return fail("Você só pode registrar o andamento e a entrega da sua tarefa.", 403);
+        if (current && !["admin", "gestor"].includes(member.role) && allowedFields.teamTask.some(key => !["status", "response", "completedAt"].includes(key) && data[key] !== (current.data[key] || ""))) return fail("Você só pode atualizar a situação e a resposta da sua tarefa.", 403);
+        if (!current || ["admin", "gestor"].includes(member.role)) {
+          data.ownerEmail = assignee.data.email?.toLowerCase() || "";
+          data.areaId = areaOf(assignee, byId) || "";
+        }
+        if (!data.ownerEmail || !await db().prepare("SELECT id FROM memberships WHERE organization_id = ? AND email = ?").bind(organizationId, data.ownerEmail).first()) return fail("Libere o acesso da pessoa antes de atribuir uma tarefa.");
+        if (!data.description || !data.due || !validDate(data.due)) return fail("Descreva a tarefa e informe um prazo válido.");
+        data.status ||= "Pendente";
+        data.completedAt = data.status === "Concluída" ? current?.data.status === "Concluída" ? current.data.completedAt : new Date().toISOString().slice(0, 10) : "";
+      }
       if (kind === "review" && (action === "createRecord" || (data.status === "Concluída" && current?.data.status !== "Concluída"))) {
         data.agenda = JSON.stringify(reviewAgenda(complete, data.cycleId, data.meetingDate).slice(0, 80));
       }
@@ -465,6 +494,7 @@ export async function POST(request: Request) {
       const id = value(body.id, 80);
       const record = byId.get(id);
       if (!record) return fail("Registro não encontrado.", 404);
+      if (record.kind === "teamTask" && !["admin", "gestor"].includes(member.role)) return fail("Apenas administradores e gestores podem arquivar tarefas.", 403);
       const cycleId = cycleOf(record, byId);
       if (cycleId && byId.get(cycleId)?.data.status === "Encerrado") return fail("O ciclo encerrado permanece no histórico e não pode ser alterado.", 409);
       if (!canWrite(member, record, byId)) return fail("Você não tem permissão para alterar este registro.", 403);
@@ -491,7 +521,7 @@ export async function POST(request: Request) {
       const person = byId.get(id);
       if (!person || person.kind !== "person") return fail("Pessoa não encontrada.", 404);
       if (body.confirmTitle !== person.title) return fail("Confirme o nome exatamente como está no registro.");
-      const linked = complete.filter((record) => ["assessment", "development"].includes(record.kind) && record.data.personId === id);
+      const linked = complete.filter((record) => ["assessment", "development", "teamTask"].includes(record.kind) && record.data.personId === id);
       const ids = [id, ...linked.map((record) => record.id)];
       const statements = ids.flatMap((recordId) => [
         db().prepare("DELETE FROM audit_events WHERE organization_id = ? AND record_id = ?").bind(organizationId, recordId),

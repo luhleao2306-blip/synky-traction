@@ -11,6 +11,7 @@ export const moduleIntros: Record<Section, ModuleIntro> = {
   structure: { eyebrow: "ESTRUTURA DA EMPRESA", title: "Áreas e cargos", description: "Organize áreas, responsabilidades e critérios." },
   hiring: { eyebrow: "PESSOAS", title: "Contratações", description: "Acompanhe vagas, entrevistas e decisões." },
   promotions: { eyebrow: "PESSOAS", title: "Evolução interna", description: "Conecte avaliações, promoções e desenvolvimento." },
+  team: { eyebrow: "PESSOAS E ACESSOS", title: "Equipe", description: "Pessoas, responsabilidades e trabalho em um só lugar." },
   admin: { eyebrow: "CONFIGURAÇÕES", title: "Administração", description: "Configure a empresa, a marca e os acessos." },
 };
 

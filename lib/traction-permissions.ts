@@ -29,6 +29,8 @@ export function recordCycle(record: Pick<TractionRecord, "id" | "kind" | "data">
 
 export function canReadRecord(scope: AccessScope, record: TractionRecord, byId: Map<string, TractionRecord>) {
   if (scope.role === "admin") return true;
+  if (record.kind === "teamTask") return record.data.ownerEmail?.toLowerCase() === scope.email.toLowerCase() || (scope.role === "gestor" && !!scope.area_id && recordArea(byId.get(record.data.personId) || record, byId) === scope.area_id);
+  if (record.kind === "person" && record.data.type === "Colaborador" && record.data.email?.toLowerCase() === scope.email.toLowerCase()) return true;
   if (["leitor", "direcao", "responsavel"].includes(scope.role)) return !personalKinds.includes(record.kind) && (record.kind !== "updateRequest" || scope.role === "direcao" || (scope.role === "responsavel" && record.data.ownerEmail?.toLowerCase() === scope.email.toLowerCase()));
   if (scope.role !== "gestor") return false;
   const area = recordArea(record, byId);
@@ -42,6 +44,7 @@ export function canReadRecord(scope: AccessScope, record: TractionRecord, byId: 
 
 export function canWriteRecord(scope: AccessScope, record: TractionRecord, byId: Map<string, TractionRecord>) {
   if (scope.role === "admin") return true;
+  if (record.kind === "teamTask") return record.data.ownerEmail?.toLowerCase() === scope.email.toLowerCase() || (scope.role === "gestor" && !!scope.area_id && recordArea(byId.get(record.data.personId) || record, byId) === scope.area_id);
   if (scope.role === "direcao") return !["area", "role", ...personalKinds].includes(record.kind);
   if (scope.role === "responsavel") {
     if (["updateRequest", "initiative"].includes(record.kind)) return record.data.ownerEmail?.toLowerCase() === scope.email.toLowerCase();

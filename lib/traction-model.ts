@@ -1,6 +1,6 @@
 export const recordKinds = [
   "cycle", "objective", "area", "role", "priority", "result", "progress", "updateRequest", "initiative", "risk",
-  "decision", "vacancy", "person", "assessment", "review", "development",
+  "decision", "vacancy", "person", "assessment", "review", "development", "teamTask",
 ] as const;
 
 export type RecordKind = (typeof recordKinds)[number];
@@ -18,7 +18,8 @@ export const allowedFields: Record<RecordKind, readonly string[]> = {
   risk: ["priorityId", "initiativeId", "owner", "ownerEmail", "impact", "nextAction", "due", "escalateTo", "dependencyAreaId", "status"],
   decision: ["priorityId", "riskId", "reviewId", "owner", "ownerEmail", "decisionMaker", "decision", "rationale", "due", "status", "effect", "decidedAt"],
   vacancy: ["roleId", "priorityId", "areaId", "reason", "status", "interviewQuestions", "interviewRubric", "openingDate"],
-  person: ["areaId", "currentRoleId", "vacancyId", "type", "status", "startDate"],
+  person: ["areaId", "currentRoleId", "vacancyId", "type", "status", "startDate", "email", "phone", "manager", "notes", "hiredFromVacancyId", "hiredAt"],
+  teamTask: ["personId", "areaId", "ownerEmail", "due", "status", "description", "response", "completedAt"],
   assessment: ["personId", "roleId", "vacancyId", "type", "evidence", "gaps", "decision", "nextStep", "interviewer", "assessedAt", "criteriaEvidence"],
   review: ["cycleId", "meetingDate", "facilitator", "summary", "decisions", "nextReview", "cadence", "status", "agenda", "outcome"],
   development: ["personId", "roleId", "goal", "action", "due", "status", "owner"],
@@ -40,6 +41,7 @@ export const references: Partial<Record<RecordKind, readonly [string, RecordKind
   assessment: [["personId", "person"], ["roleId", "role"], ["vacancyId", "vacancy"]],
   review: [["cycleId", "cycle"]],
   development: [["personId", "person"], ["roleId", "role"]],
+  teamTask: [["personId", "person"], ["areaId", "area"]],
 };
 
 export type TractionRecord = {
@@ -57,5 +59,5 @@ export type TractionRecord = {
 };
 
 export function labelFor(kind: RecordKind): string {
-  return ({ cycle: "Ciclo", objective: "Objetivo", area: "Área", role: "Cargo", priority: "Prioridade", result: "Resultado", progress: "Atualização", updateRequest: "Solicitação de atualização", initiative: "Iniciativa", risk: "Risco", decision: "Decisão", vacancy: "Vaga", person: "Pessoa", assessment: "Avaliação", review: "Revisão", development: "Plano de desenvolvimento" })[kind];
+  return ({ cycle: "Ciclo", objective: "Objetivo", area: "Área", role: "Cargo", priority: "Prioridade", result: "Resultado", progress: "Atualização", updateRequest: "Solicitação de atualização", initiative: "Iniciativa", risk: "Risco", decision: "Decisão", vacancy: "Vaga", person: "Pessoa", assessment: "Avaliação", review: "Revisão", development: "Plano de desenvolvimento", teamTask: "Tarefa da equipe" })[kind];
 }

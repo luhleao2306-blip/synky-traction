@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { Section } from "./traction-types";
 
 const sectionNames: Record<Section, string> = {
-  overview: "Dashboard", guide: "Boas práticas", planning: "Plano do ciclo", reviews: "Reuniões", results: "Resultados",
+  team: "Equipe", overview: "Dashboard", guide: "Boas práticas", planning: "Plano do ciclo", reviews: "Reuniões", results: "Resultados",
   structure: "Áreas e cargos", hiring: "Contratações", promotions: "Evolução interna", admin: "Administração",
 };
 

@@ -1,6 +1,6 @@
 import type { RecordKind, TractionRecord } from "@/lib/traction-model";
 
-export type Section = "overview" | "guide" | "planning" | "structure" | "hiring" | "promotions" | "reviews" | "results" | "admin";
+export type Section = "team" | "overview" | "guide" | "planning" | "structure" | "hiring" | "promotions" | "reviews" | "results" | "admin";
 export type PersonType = "Candidato" | "Colaborador";
 export type OrganizationSummary = { id: string; name: string; role: string; area_id: string | null };
 export type MemberRow = { email: string; name: string; role: string; area_id: string | null; user_id: string | null; has_account?: number };
