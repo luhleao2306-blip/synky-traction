@@ -53,6 +53,7 @@ import "./traction-record-form.css";
 import "./traction-reference-fidelity.css";
 import { ModuleHeading, moduleIntros, companyIntro } from "./traction-module-heading";
 import "./traction-module-heading.css";
+import "./traction-workspace-spacing.css";
 
 const nav: { id: Section; label: string; description: string; icon: typeof LayoutDashboard; group: string }[] = [
   { id: "overview", label: "Dashboard", description: "Visão geral e próximos passos", icon: LayoutDashboard, group: "COMEÇAR" },
