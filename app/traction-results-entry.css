@@ -1,0 +1,56 @@
+/* Global results entry only. Company reports and the landing page retain their existing styles. */
+.synky-shell.results-entry-shell .app-header { height:54px; min-height:54px; background:#fff !important; }
+.synky-shell.results-entry-shell .page-body { padding:18px 25px 24px; background:#f5f7f9; }
+.synky-shell .results-entry { --results-ink:#11232c; --results-muted:#647b89; display:grid; gap:18px; }
+.synky-shell .results-entry-hero { position:relative; overflow:hidden; border-radius:14px; background:linear-gradient(115deg,#005246,#075c4c); color:#fff; min-height:166px; padding:26px 33px 22px; display:flex; align-items:center; }
+.synky-shell .results-entry-hero > div { position:relative; z-index:1; }
+.synky-shell .results-entry-hero span { font-size:.8125rem; font-weight:600; letter-spacing:.04em; }
+.synky-shell .results-entry-hero h1 { color:#fff; font-size:2.4rem; letter-spacing:-.035em; line-height:1.1; margin:7px 0; font-weight:750; }
+.synky-shell .results-entry-hero p { font-size:1rem; line-height:1.5; margin:0; color:#edf8f3; }
+.synky-shell .results-entry-hero i { display:block; width:54px; height:4px; border-radius:4px; background:#d2f39b; margin-top:15px; }
+.synky-shell .results-hero-lines { position:absolute; width:53%; height:100%; right:0; bottom:0; opacity:.7; }
+.synky-shell .results-hero-icon { position:absolute; right:28px; top:50%; transform:translateY(-50%); width:55px; height:55px; display:grid; place-items:center; color:#d8efb7; border:1px solid #ffffff40; border-radius:14px; background:#005547; }
+.synky-shell .results-entry-layout { display:grid; grid-template-columns:minmax(0,3.1fr) minmax(240px,1fr); gap:15px; align-items:stretch; }
+.synky-shell .results-entry-preview { background:#fff; border:1px solid #e1e8ed; border-radius:14px; padding:24px; min-width:0; }
+.synky-shell .results-entry-preview > header { display:flex; align-items:flex-start; gap:14px; flex-wrap:wrap; }
+.synky-shell .results-preview-icon { display:grid; place-items:center; flex-shrink:0; width:44px; height:44px; background:#eff6e3; color:#00644d; border-radius:13px; }
+.synky-shell .results-entry-preview > header > div:nth-child(2) { flex:1; min-width:180px; }
+.synky-shell .results-entry-preview > header span:not(.results-preview-icon) { color:var(--results-muted); font-size:.8125rem; }
+.synky-shell .results-entry-preview h2 { color:var(--results-ink); font-size:1.4rem; letter-spacing:-.025em; font-weight:750; line-height:1.2; margin:3px 0; }
+.synky-shell .results-entry-preview header p { font-size:.875rem; line-height:1.5; color:var(--results-muted); margin:4px 0 0; }
+.synky-shell .results-preview-actions { display:flex; gap:8px; flex-wrap:wrap; }
+.synky-shell .results-preview-actions [data-slot=button] { border:1px solid #d6e2df; border-radius:9px; min-height:36px; font-size:.8125rem; background:#fff; color:#213c3b; }
+.synky-shell .results-preview-actions [data-slot=button]:last-child { background:#f2f8eb; }
+.synky-shell .results-entry-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:22px 0 20px; }
+.synky-shell .results-entry-metrics > div { display:flex; gap:12px; padding:18px 14px; background:#f7f9fa; border-radius:12px; min-width:0; }
+.synky-shell .results-entry-metrics > div > span { color:#00644d; background:#eaf4dd; width:42px; height:42px; border-radius:50%; display:grid; place-items:center; flex-shrink:0; }
+.synky-shell .results-entry-metrics > div > div { min-width:0; flex:1; }
+.synky-shell .results-entry-metrics h3 { color:var(--results-ink); font-size:.875rem; line-height:1.3; font-weight:650; margin:0; min-height:19px; }
+.synky-shell .results-entry-metrics strong { font-size:1.6rem; line-height:1.5; color:#112d34; display:block; }
+.synky-shell .results-entry-metrics i { display:block; background:#e9edf0; height:3px; border-radius:3px; margin-top:8px; width:100%; }
+.synky-shell .results-entry-metrics i:last-child { width:70%; }
+.synky-shell .results-entry-empty { border-top:1px solid #e7edef; min-height:205px; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:30px 18px 12px; }
+.synky-shell .results-entry-empty > span { display:grid; place-items:center; color:#78919b; background:#f1f4f6; width:50px; height:50px; border:1px solid #e4ebef; border-radius:15px; }
+.synky-shell .results-entry-empty h3 { font-size:1rem; color:var(--results-ink); font-weight:700; margin:13px 0 7px; }
+.synky-shell .results-entry-empty p { font-size:.875rem; color:var(--results-muted); max-width:390px; line-height:1.6; margin:0; }
+.synky-shell .results-entry-empty small { color:#728792; font-size:.75rem; line-height:1.5; margin-top:12px; }
+.synky-shell .results-entry-setup { padding:26px 23px; border-radius:14px; background:#f1f7e9; min-width:0; }
+.synky-shell .results-entry-access { display:flex; align-items:center; gap:10px; color:#00644d; font-size:.8125rem; font-weight:650; }
+.synky-shell .results-entry-access svg { width:29px; height:29px; padding:5px; border-radius:9px; background:#e3f0cf; }
+.synky-shell .results-entry-setup h2 { font-size:1.65rem; font-weight:750; line-height:1.15; letter-spacing:-.03em; color:var(--results-ink); margin:22px 0 12px; }
+.synky-shell .results-entry-setup > p { font-size:.875rem; color:var(--results-muted); line-height:1.65; margin:0 0 17px; }
+.synky-shell .results-entry-setup > [data-slot=button] { width:100%; min-height:44px; border-radius:10px; font-size:.875rem; gap:9px; margin-bottom:10px; }
+.synky-shell .results-entry-setup > [data-slot=button] svg:last-child { margin-left:auto; }
+.synky-shell .results-entry-setup > [data-slot=button]:nth-of-type(2) { color:#00644d; border:1px solid #9bb4a7; background:transparent; }
+.synky-shell .results-entry-next { border-top:1px solid #dce8d4; padding-top:21px; margin-top:13px; display:flex; align-items:flex-start; gap:12px; }
+.synky-shell .results-entry-next > span { display:grid; place-items:center; width:35px; height:35px; flex-shrink:0; border-radius:50%; color:#00644d; background:#e3f0cf; }
+.synky-shell .results-entry-next h3 { color:var(--results-ink); font-size:.875rem; font-weight:650; margin:3px 0 5px; }
+.synky-shell .results-entry-next p { font-size:.8125rem; color:var(--results-muted); line-height:1.6; margin:0; }
+.synky-shell .results-entry-picker { display:flex; align-items:center; flex-wrap:wrap; gap:10px; border-top:1px solid #e7edef; padding-top:15px; margin-top:16px; }
+.synky-shell .results-entry-picker label { font-size:.875rem; color:var(--results-ink); font-weight:600; }
+.synky-shell .results-entry-picker select { min-width:0; flex:1; font-size:.875rem; padding:10px; border:1px solid #d7e3df; border-radius:8px; background:#fff; color:var(--results-ink); }
+.synky-shell .results-entry-error { color:#9d2525; padding:12px; border:1px solid #edd0d0; background:#fff4f4; border-radius:8px; font-size:.875rem; margin-top:14px; }
+.synky-shell .results-entry button:focus-visible,.synky-shell .results-entry select:focus-visible { outline:3px solid #398b70; outline-offset:3px; }
+@media(max-width:1150px) { .synky-shell .results-entry-layout { grid-template-columns:minmax(0,2.6fr) minmax(230px,1fr); } .synky-shell .results-entry-preview { padding:19px; } .synky-shell .results-entry-metrics { gap:9px; } .synky-shell .results-entry-metrics > div { flex-direction:column; padding:14px; } .synky-shell .results-preview-actions { margin-left:58px; } }
+@media(max-width:800px) { .synky-shell.results-entry-shell .page-body { padding:16px; } .synky-shell .results-entry-layout { grid-template-columns:minmax(0,1fr); } .synky-shell .results-entry-hero { padding:24px; } .synky-shell .results-entry-hero h1 { font-size:2rem; } .synky-shell .results-hero-lines { width:60%; opacity:.4; } .synky-shell .results-hero-icon { display:none; } .synky-shell .results-entry-setup { padding:23px; } .synky-shell .results-entry-metrics h3 { font-size:.8125rem; } .synky-shell .results-entry-preview > header { gap:11px; } .synky-shell .results-preview-actions { margin-left:0; } }
+@media(max-width:430px) { .synky-shell .results-entry-preview { padding:16px; } .synky-shell .results-entry-metrics { gap:7px; } .synky-shell .results-entry-metrics > div { padding:12px 9px; } .synky-shell .results-entry-metrics h3 { min-height:34px; } .synky-shell .results-entry-metrics > div > span { width:36px; height:36px; } .synky-shell .results-entry-picker select { flex-basis:100%; } }

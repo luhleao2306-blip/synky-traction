@@ -1,0 +1,80 @@
+/* Workspace only: native UI fonts avoid a font swap and use the device's hinting. */
+.synky-shell, .synky-dialog, .premium-sidebar {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+.synky-shell :is(button, input, select, textarea),
+.synky-dialog :is(button, input, select, textarea),
+.premium-sidebar button { font-family: inherit; letter-spacing: normal; }
+
+/* Keep headings distinct without compressing the letterforms. */
+.synky-shell :is(h1, h2, h3), .synky-dialog :is(h2, h3) {
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+.synky-shell :is(.page-title-row h1, .panel-head h2, .practice-intro h2, .practice-panel h2, .module-start-main h2),
+.synky-dialog :is([data-slot=dialog-title], [data-slot=alert-dialog-title]) {
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+.synky-shell :is(.page-title-row p, .panel-head p, .module-start-main p, .practice-intro p),
+.synky-dialog :is([data-slot=dialog-description], [data-slot=alert-dialog-description]) {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.synky-shell :is(.page-eyebrow, .section-label),
+.synky-dialog :is(.company-setup-eyebrow, .form-section-heading) {
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .035em;
+}
+
+/* Navigation also lives in a portal on mobile. */
+.premium-sidebar .premium-nav-button { font-size: 1rem; font-weight: 600; line-height: 1.35; }
+.premium-sidebar .premium-nav-button[data-active=true] { font-weight: 700; }
+.premium-sidebar .premium-master-button { font-size: .9375rem; }
+.premium-sidebar :is(.premium-product-caption, .premium-company small, .premium-account-copy small,
+  [data-slot=sidebar-group-label]) { font-size: .875rem; line-height: 1.5; color: #cbded3; letter-spacing: normal; }
+.premium-sidebar :is(.premium-company strong, .premium-account-copy strong) { font-size: .9375rem; font-weight: 600; }
+.premium-sidebar .premium-start-button { font-size: .9375rem; font-weight: 600; }
+
+/* Data, filters and forms share readable sizes and standard font weights. */
+.synky-shell :is([data-slot=button], .module-filter-row label, .module-filter-row > span,
+  .master-company-toolbar, .master-company-count, .workspace-chip, .header-location,
+  .master-company-list small, .master-access-badge, .master-empty-note,
+  .header-workspace-context span, .work-queue-table td button small, .work-queue-table td button span,
+  .insight-disclosure > summary span, .decision-history-row small,
+  .result-evidence td small, .admin-people-table td small, .admin-record-row span,
+  .practice-progress, .practice-checklist small, .practice-human, .practice-example > span) {
+  font-size: .875rem;
+  line-height: 1.5;
+}
+.synky-shell :is([data-slot=button], .strategy-tabs button, .pipeline-stage-head,
+  .insight-disclosure > summary strong, .practice-tabs button, .practice-module-list button) { font-weight: 600; }
+.synky-shell :is(.module-filter-row input, .module-filter-row select, .master-company-search input,
+  [data-slot=input], [data-slot=textarea]),
+.synky-dialog :is(input, select, textarea) { font-size: 1rem; font-weight: 400; line-height: 1.5; }
+.synky-shell :is(table, .work-queue-table) th { font-size: .875rem; font-weight: 600; line-height: 1.5; }
+.synky-shell :is(table, .work-queue-table) td { font-size: .9375rem; line-height: 1.6; }
+.synky-shell :is(.metric strong, .strategy-kpis strong, .report-metric strong) { font-variant-numeric: tabular-nums; font-weight: 700; }
+.synky-shell :is(.metric small, .strategy-kpis small, .report-metric small, .strategy-priority-bottom b) {
+  font-size: .875rem;
+  letter-spacing: normal;
+  line-height: 1.5;
+}
+.synky-dialog :is(.field-label, .company-setup-steps button, [data-slot=button]) { font-weight: 600; }
+.synky-dialog .field-label, .synky-dialog .company-setup-fields .field-label { font-size: .9375rem; line-height: 1.5; font-weight: 600; }
+.synky-dialog :is(.field-help, .field-hint, .company-setup-footer > span) { font-size: .875rem; line-height: 1.5; }
+.synky-dialog :is(.company-preview-label, .company-live-preview > p, .company-preset-grid button,
+  .company-setup-footer small, .company-setup-fields .field-label small) { font-size: .875rem; }
+.synky-dialog .company-preview-brand small { font-size: .75rem; letter-spacing: .035em; }
+
+@media (max-width: 700px) {
+  .synky-shell .page-title-row h1 { font-size: 1.75rem; }
+  .synky-shell .header-location { line-height: 1.4; }
+}

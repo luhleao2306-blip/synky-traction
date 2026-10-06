@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1790270384456,
+      "tag": "0000_high_norman_osborn",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1790272345701,
+      "tag": "0001_sour_bullseye",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790276490749,
+      "tag": "0002_careless_manta",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1790359334079,
+      "tag": "0003_loving_expediter",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1790360513874,
+      "tag": "0004_tiny_korg",
+      "breakpoints": true
+    }
+  ]
+}

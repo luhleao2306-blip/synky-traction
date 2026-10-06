@@ -1,0 +1,58 @@
+/* Scoped to the master administration entry; company settings and LP keep their own styles. */
+.synky-shell.admin-entry-shell .app-header { min-height:54px; height:54px; background:#fff !important; }
+.synky-shell.admin-entry-shell .page-body { padding:24px 27px 18px; background:#f5f7f9; }
+.synky-shell .admin-entry { display:grid; gap:17px; color:#152632; }
+.synky-shell .admin-entry-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+.synky-shell .admin-entry-heading > div:first-child > span { font-size:.75rem; color:#74808e; font-weight:700; }
+.synky-shell .admin-entry-heading h1 { margin:5px 0 4px; font-size:2.1rem; line-height:1.15; letter-spacing:-.035em; font-weight:750; color:#12212b; }
+.synky-shell .admin-entry-heading p { margin:0; color:#74808e; font-size:1rem; line-height:1.5; }
+.synky-shell .admin-entry-heading-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.synky-shell .admin-entry-master { display:inline-flex; align-items:center; gap:7px; background:#e9f5dc; border-radius:8px; padding:10px 12px; color:#064938; font-size:.875rem; font-weight:650; }
+.synky-shell .admin-entry [data-slot=button] { min-height:37px; border-radius:7px; font-size:.875rem; box-shadow:none; }
+.synky-shell .admin-entry-heading-actions [data-slot=button] { border-color:#8faf9f; color:#064f3d; }
+.synky-shell .admin-entry-layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(285px,1fr); gap:14px; }
+.synky-shell .admin-entry-settings,.synky-shell .admin-entry-companies { border:1px solid #e3e9ed; background:#fff; border-radius:11px; min-width:0; }
+.synky-shell .admin-entry-settings { padding:25px 24px 12px; }
+.synky-shell .admin-entry-settings > header { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
+.synky-shell .admin-entry-settings h2 { margin:0; font-size:1.35rem; font-weight:750; letter-spacing:-.025em; line-height:1.25; }
+.synky-shell .admin-entry-settings > header > span { font-size:.75rem; color:#677584; background:#f2f4f7; border-radius:20px; padding:5px 9px; }
+.synky-shell .admin-entry-settings > p { margin:7px 0 14px; color:#758293; font-size:.875rem; line-height:1.55; }
+.synky-shell .admin-entry-settings ul,.synky-shell .admin-entry-companies ul { list-style:none; padding:0; margin:0; }
+.synky-shell .admin-entry-settings li { display:flex; align-items:center; gap:22px; padding:19px 2px; }
+.synky-shell .admin-entry-settings li + li { border-top:1px solid #e7edf0; }
+.synky-shell .admin-entry-setting-icon { display:grid; place-items:center; width:43px; height:43px; flex-shrink:0; border-radius:9px; background:#edf7f1; color:#006b4e; }
+.synky-shell .admin-entry-settings li > div,.synky-shell .admin-entry-companies li > div { flex:1; min-width:0; }
+.synky-shell .admin-entry-settings h3,.synky-shell .admin-entry-companies h3 { font-size:.9375rem; margin:0 0 3px; font-weight:700; line-height:1.4; overflow-wrap:anywhere; }
+.synky-shell .admin-entry-settings li p,.synky-shell .admin-entry-companies li p { margin:0; font-size:.875rem; color:#758293; line-height:1.45; }
+.synky-shell .admin-entry-settings li > svg { color:#82919d; flex-shrink:0; }
+.synky-shell .admin-entry-space { position:relative; overflow:hidden; border:1px solid #0c6551; border-radius:11px; background:linear-gradient(130deg,#00533e,#003f34); padding:24px 27px 18px; color:#fff; min-height:390px; }
+.synky-shell .admin-entry-space h2 { font-size:1.6rem; font-weight:700; letter-spacing:-.025em; line-height:1.17; color:#fff; margin:0 0 9px; }
+.synky-shell .admin-entry-space > p { font-size:.9375rem; color:#d7eae0; line-height:1.5; margin:0 0 13px; max-width:310px; }
+.synky-shell .admin-entry-count { display:grid; gap:2px; margin-bottom:14px; }
+.synky-shell .admin-entry-count strong { font-size:2.6rem; line-height:1; font-weight:750; color:#d3f18a; font-variant-numeric:tabular-nums; }
+.synky-shell .admin-entry-count span { font-size:.875rem; color:#e4f3e9; font-weight:600; }
+.synky-shell .admin-entry-space-actions { display:grid; gap:10px; max-width:230px; }
+.synky-shell.admin-entry-shell .admin-entry [data-slot=button].admin-entry-create { color:#073d2e !important; background:#d3f18a !important; border:1px solid #d3f18a !important; }
+.synky-shell.admin-entry-shell .admin-entry [data-slot=button].admin-entry-create:hover { background:#c6e977 !important; }
+.synky-shell .admin-entry-space-actions [data-slot=button][data-variant=outline] { background:transparent; color:#fff; border:1px solid #a0c2b2; }
+.synky-shell .admin-entry-space-actions [data-slot=button][data-variant=outline]:hover { background:#ffffff12; }
+.synky-shell .admin-entry-diagram { display:flex; justify-content:flex-end; align-items:center; margin-top:24px; opacity:.8; }
+.synky-shell .admin-entry-diagram span { display:grid; place-items:center; width:51px; height:51px; border:1px solid #8ea989; border-radius:9px; color:#cde697; background:#ffffff06; }
+.synky-shell .admin-entry-diagram i { height:1px; width:25px; background:#8ea989; }
+.synky-shell .admin-entry-companies { padding:17px 23px; }
+.synky-shell .admin-entry-companies > header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.synky-shell .admin-entry-companies h2 { margin:0; display:flex; align-items:center; gap:10px; font-size:1rem; font-weight:700; }
+.synky-shell .admin-entry-companies h2 > span { padding:3px 9px; background:#eaf6ee; color:#076149; border-radius:7px; font-size:.875rem; }
+.synky-shell .admin-entry-companies header p { margin:5px 0 0; color:#758293; font-size:.875rem; }
+.synky-shell .admin-entry-companies ul { margin-top:14px; border-top:1px solid #e7edf0; }
+.synky-shell .admin-entry-companies li { display:flex; align-items:center; gap:13px; padding:14px 0; }
+.synky-shell .admin-entry-companies li + li { border-top:1px solid #e7edf0; }
+.synky-shell .admin-entry-error { margin:12px 0 0; border:1px solid #e9c9c9; background:#fff5f5; color:#992c2c; padding:11px; border-radius:7px; font-size:.875rem; }
+.synky-shell .admin-entry-footer { display:flex; align-items:center; justify-content:space-between; gap:14px; color:#72828f; font-size:.8125rem; flex-wrap:wrap; }
+.synky-shell .admin-entry-footer button,.synky-shell .admin-entry-footer > span { display:flex; align-items:center; gap:9px; }
+.synky-shell .admin-entry-footer button { cursor:pointer; background:transparent; border:0; padding:0; font:inherit; color:#304856; text-decoration:underline; text-underline-offset:3px; }
+.synky-shell .admin-entry button:focus-visible { outline:3px solid #378d71; outline-offset:3px; }
+@media(max-width:900px) { .synky-shell .admin-entry-layout { grid-template-columns:minmax(0,1fr); } .synky-shell .admin-entry-space { min-height:0; } .synky-shell .admin-entry-space-actions { max-width:300px; } }
+@media(max-width:480px) { .synky-shell.admin-entry-shell .page-body { padding:19px 16px; } .synky-shell .admin-entry-heading h1 { font-size:1.9rem; } .synky-shell .admin-entry-heading-actions { gap:8px; } .synky-shell .admin-entry-settings { padding:20px 17px 8px; } .synky-shell .admin-entry-settings li { gap:14px; } .synky-shell .admin-entry-space { padding:23px; } .synky-shell .admin-entry-companies { padding:16px; } .synky-shell .admin-entry-companies li { flex-wrap:wrap; } .synky-shell .admin-entry-companies li > div { flex-basis:calc(100% - 60px); } .synky-shell .admin-entry-companies li [data-slot=button] { margin-left:56px; } }
+.synky-shell .admin-entry-companies ul { max-height:320px; overflow-y:auto; }
+

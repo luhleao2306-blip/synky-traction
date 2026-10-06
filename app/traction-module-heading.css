@@ -1,0 +1,45 @@
+/* Panel headings share one rhythm across master and company workspaces. */
+.synky-shell .synky-module-heading {
+  min-width: 0;
+  max-width: 100%;
+}
+.synky-shell .synky-module-heading span.synky-module-eyebrow,
+.synky-shell.reference-fidelity-shell .synky-module-heading span.synky-module-eyebrow {
+  display: block;
+  margin: 0 0 8px;
+  padding: 0;
+  color: #65747e;
+  background: none;
+  font: 600 12px/1.4 "Segoe UI", Arial, sans-serif;
+  letter-spacing: .055em;
+}
+.synky-shell .synky-module-heading h1.synky-module-title,
+.synky-shell.reference-fidelity-shell .synky-module-heading h1.synky-module-title {
+  margin: 0;
+  color: #142a30;
+  font: 700 34px/1.2 "Segoe UI", Arial, sans-serif;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: auto;
+}
+.synky-shell .synky-module-heading p.synky-module-description,
+.synky-shell.reference-fidelity-shell .synky-module-heading p.synky-module-description {
+  max-width: 58ch;
+  margin: 8px 0 0;
+  color: #52636d;
+  font: 400 16px/1.5 "Segoe UI", Arial, sans-serif;
+  letter-spacing: normal;
+  text-wrap: pretty;
+}
+.synky-shell.reference-fidelity-shell .results-entry-hero .synky-module-heading span.synky-module-eyebrow { color: #c4ded4; }
+.synky-shell.reference-fidelity-shell .results-entry-hero .synky-module-heading h1.synky-module-title { color: #fff; }
+.synky-shell.reference-fidelity-shell .results-entry-hero .synky-module-heading p.synky-module-description { color: #e1eee8; }
+@media (max-width: 700px) {
+  .synky-shell .synky-module-heading h1.synky-module-title,
+  .synky-shell.reference-fidelity-shell .synky-module-heading h1.synky-module-title { font-size: 28px; }
+}
+@container workspace (max-width: 480px) {
+  .synky-shell .synky-module-heading h1.synky-module-title,
+  .synky-shell.reference-fidelity-shell .synky-module-heading h1.synky-module-title { font-size: 28px; }
+}

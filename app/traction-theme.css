@@ -1,0 +1,143 @@
+/* Panel palette. Tenant colours stay configurable; public landing styles are untouched. */
+.synky-shell, .synky-dialog {
+  --workspace-page: #f4f5f6;
+  --workspace-surface: #fff;
+  --workspace-ink: #252d30;
+  --workspace-muted: #606b70;
+  --workspace-line: #e0e4e6;
+  --workspace-soft: #f4f5f6;
+  --workspace-tint: #f4f5f6;
+  --workspace-accent-line: #e0e4e6;
+  --foreground: var(--workspace-ink);
+  --muted-foreground: var(--workspace-muted);
+  --accent: var(--workspace-soft);
+  --accent-foreground: var(--workspace-ink);
+  --border: var(--workspace-line);
+  --card: var(--workspace-surface);
+  --card-foreground: var(--workspace-ink);
+  --muted: var(--workspace-soft);
+  --input: var(--workspace-line);
+  color: var(--workspace-ink);
+}
+.synky-shell, .synky-shell .main-inset { background: #f4f7f5; }
+.synky-shell .app-header { border-color: var(--workspace-line); box-shadow: 0 2px 12px #173b2705; }
+.synky-shell .page-title-row h1 { font-weight: 750; letter-spacing: -.035em; }
+.synky-shell .page-eyebrow { display: inline-flex; padding: 5px 9px; border-radius: 6px; background: var(--workspace-tint); font-size: .75rem; letter-spacing: .045em; }
+.synky-shell :is(.panel, .metric, .structure-summary, .report-section, .report-metric, .practice-panel, .module-start) { border-color: var(--workspace-line); border-radius: 14px; box-shadow: 0 3px 16px #173b2705; }
+.synky-shell :is(h2, h3, .metric strong, .structure-summary strong, .report-metric strong, .module-start-main h2, .practice-checklist strong, .area-card strong, .development-card strong, .pipeline-card strong) { color: var(--workspace-ink); }
+.synky-shell :is(.panel-head p, .strategy-muted, .module-start-main p, .module-start-main > small, .module-start-steps p, .practice-intro p, .practice-checklist p, .practice-checklist small, .practice-lesson-purpose, .practice-lesson-steps p, .practice-example p, .metric small, .metric-label, .structure-summary p, .report-metric small) { color: var(--workspace-muted); }
+.synky-shell :is(.action-primary, [data-slot=button][data-variant=default]), .synky-dialog :is(.action-primary, [data-slot=button][data-variant=default]) {
+  background: var(--tenant-primary) !important; border-color: var(--tenant-primary) !important; color: #fff !important;
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--tenant-primary), transparent 85%); border-radius: 9px; transition: background .15s, box-shadow .15s;
+}
+.synky-shell :is(.action-primary, [data-slot=button][data-variant=default]):hover, .synky-dialog :is(.action-primary, [data-slot=button][data-variant=default]):hover { background: color-mix(in srgb, var(--tenant-primary), black 12%) !important; border-color: color-mix(in srgb, var(--tenant-primary), black 12%) !important; box-shadow: 0 5px 12px color-mix(in srgb, var(--tenant-primary), transparent 78%); }
+.synky-shell :is(.user-avatar, .empty-icon, .metric-icon, .summary-icon, .master-empty-icon, .count-chip, .count-badge, .strategy-order, .strategy-agenda-num, .strategy-action-icon:not(.warning), .insight-board-number, .insight-board-total, .practice-step-marker, .practice-progress) { color: var(--tenant-primary); background: var(--workspace-tint); border-color: var(--workspace-accent-line); }
+.synky-shell :is(.text-action, .guide-shortcut, .strategy-quick-links button, .pipeline-card em, .work-queue-table td button small, .result-evidence td button, .practice-human, .practice-example > span, .insight-board-action, .insight-board-more) { color: var(--tenant-primary); }
+.synky-shell :is(.search-box, .org-switch, .workspace-chip, .module-filter-row input, .module-filter-row select, .master-company-search input) { background: #fff; color: var(--workspace-ink); border-color: var(--workspace-line); }
+.synky-shell :is(input, select, textarea):focus-visible, .synky-dialog :is(input, select, textarea):focus-visible { outline-color: var(--tenant-primary); border-color: var(--tenant-primary); }
+.synky-shell :is(.search-box:focus-within, .master-company-search input:focus) { border-color: var(--tenant-primary); box-shadow: 0 0 0 3px var(--workspace-tint); }
+.synky-shell :is(table, .work-queue-table) th { background: #f2f6f3; color: #52675c; border-color: var(--workspace-line); }
+.synky-shell :is(table, .work-queue-table) td { color: #344a3f; border-color: var(--workspace-line); }
+.synky-shell :is(.record-line, .development-card, .area-card, .strategy-priority, .master-company-list > button):hover { border-color: var(--workspace-accent-line); background: var(--workspace-soft); }
+.synky-shell :is(.module-filter-row, .insight-disclosure) { border-color: var(--workspace-line); }
+.synky-shell .module-filter-row label, .synky-shell .module-filter-row > span { color: var(--workspace-muted); }
+.synky-shell .insight-disclosure > summary { color: var(--workspace-ink); }
+.synky-shell .insight-disclosure > summary > svg:first-child { color: var(--tenant-primary); }
+.synky-shell .insight-disclosure > summary span { color: var(--workspace-muted); }
+.synky-shell .pipeline-stage { background: #eaf0ec; }
+.synky-shell .pipeline-stage-head { color: var(--workspace-ink); }
+.synky-shell .pipeline-card { border: 1px solid var(--workspace-line); }
+
+/* Dark navigation, vivid selection, and neutral metadata. Also applies to the mobile portal. */
+.premium-sidebar { --premium-menu-bg: var(--tenant-sidebar, #102c24); color: #eef7f1; }
+.premium-sidebar [data-slot=sidebar-inner] { background: linear-gradient(180deg, color-mix(in srgb, var(--premium-menu-bg), white 3%), var(--premium-menu-bg)) !important; }
+.premium-product-caption, .premium-company small, .premium-sidebar-content [data-slot=sidebar-group-label], .premium-account-copy small { color: #bdd3c7; }
+.premium-product-caption { font-size: .8125rem; }
+.premium-sidebar-content [data-slot=sidebar-group-label] { font-size: .8125rem; }
+.premium-nav-button { height: 44px !important; color: #e4f0e9; border-radius: 9px; font-weight: 550; }
+.premium-nav-button > svg, .premium-account-shield { color: #aac8b7; }
+.premium-nav-button:hover { background: #ffffff10; color: #fff; }
+.premium-nav-button[data-active=true] { background: var(--tenant-primary, #087f5b) !important; border-color: #ffffff1c; color: #fff !important; box-shadow: 0 4px 14px #00000018; }
+.premium-nav-button[data-active=true] > svg { color: #fff; }
+.premium-master-button { font-size: .875rem; }
+.premium-nav-dot { background: #fff; }
+.premium-sidebar-footer { background: #00000010; }
+.premium-start-button { background: var(--tenant-primary, #087f5b); color: #fff; }
+.premium-account-avatar { border-radius: 50%; color: #fff; }
+
+/* Real company directory and workspace context. */
+.synky-shell .master-access-strip { padding: 20px 22px; border-radius: 14px; background: var(--tenant-sidebar); border-color: var(--tenant-sidebar); color: #fff; }
+.synky-shell .master-access-strip > svg { color: #99e5be; }
+.synky-shell .master-access-strip div > span { color: #c6ded1; }
+.synky-shell .master-access-badge { background: #dcf6e8; color: #145a40; border: 0; font-size: .8125rem; }
+.synky-shell .master-company-empty { padding: 40px 20px; border: 1px solid var(--workspace-line); background: #f7faf8; }
+.synky-shell .master-company-empty h3, .synky-shell .master-company-list strong { color: var(--workspace-ink); }
+.synky-shell :is(.master-company-empty p, .master-empty-note, .master-company-list small, .master-company-search, .master-search-empty) { color: var(--workspace-muted); }
+.synky-shell .master-company-list > button { border-color: var(--workspace-line); }
+.synky-shell .master-module-context { background: var(--workspace-soft); border-color: var(--workspace-accent-line); color: var(--tenant-primary); }
+.synky-shell .master-module-context small { color: var(--workspace-muted); }
+
+/* Planning, reviews and reporting keep warning/success colours semantic. */
+.synky-shell .strategy-hero { padding: 24px; border-left-width: 5px; background: #fff; }
+.synky-shell .strategy-hero .section-label { color: var(--tenant-primary); }
+.synky-shell .strategy-hero p, .synky-shell .strategy-hero-meta span { color: var(--workspace-muted); }
+.synky-shell .strategy-hero > button { background: var(--workspace-tint); border-color: var(--workspace-accent-line); color: var(--tenant-primary); }
+.synky-shell .strategy-hero > button:hover { background: var(--workspace-soft); }
+.synky-shell .strategy-kpis { padding: 0; background: transparent; border: 0; box-shadow: none; gap: 12px; }
+.synky-shell .strategy-kpis > div { padding: 18px; border: 1px solid var(--workspace-line); border-radius: 12px; background: #fff; }
+.synky-shell .strategy-kpis strong { color: var(--workspace-ink); font-size: 1.9rem; }
+.synky-shell .strategy-kpis :is(span, small) { color: var(--workspace-muted); }
+.synky-shell .strategy-priorities-panel { border-top-color: var(--tenant-primary); }
+.synky-shell .strategy-priority-indicator { color: var(--tenant-primary) !important; }
+.synky-shell :is(.strategy-priority-update, .strategy-cycle-heading, .strategy-review-choice.active, .strategy-last-review, .strategy-tabs, .decision-history-filters button, .report-section-nav) { background: var(--workspace-soft); border-color: var(--workspace-line); }
+.synky-shell :is(.strategy-tabs button, .strategy-cycle-select, .decision-history-filters button) { color: var(--workspace-muted); }
+.synky-shell :is(.strategy-tabs button.active, .decision-history-filters button.active, .insight-board-tabs button.active) { color: var(--tenant-primary); border-color: var(--workspace-accent-line); background: var(--workspace-tint); box-shadow: none; }
+.synky-shell :is(.strategy-meeting-head, .report-intro) { background: var(--tenant-sidebar); border-color: var(--tenant-sidebar); }
+.synky-shell :is(.strategy-meeting-head, .report-intro) :is(h2, h3, .section-label) { color: #fff; }
+.synky-shell :is(.strategy-meeting-head, .report-intro) p { color: #c6ded1; }
+.synky-shell .report-intro small { color: #c6ded1; }
+.synky-shell .metric::before { background: var(--tenant-primary); opacity: 1; }
+
+/* Guidance, identity studio and setup follow the same neutral surfaces. */
+.synky-shell :is(.module-start-steps, .module-start-steps li, .practice-tabs, .practice-tip, .practice-example, .brand-preview-wrap, .admin-role-guide > div, .admin-record-row:hover) { background: #f2f6f3; border-color: var(--workspace-line); color: var(--workspace-muted); }
+.synky-shell .module-start-steps li > span { color: var(--tenant-primary); background: var(--workspace-tint); }
+.synky-shell .module-start-steps strong { color: var(--workspace-ink); }
+.synky-shell .practice-intro { background: #fff; border-top: 4px solid var(--tenant-primary); }
+.synky-shell .practice-intents button { border-color: var(--workspace-line); color: var(--tenant-primary); }
+.synky-shell .practice-intents strong { color: var(--workspace-ink); }
+.synky-shell .practice-intents small { color: var(--workspace-muted); }
+.synky-shell .practice-intents button:hover { border-color: var(--workspace-accent-line); background: var(--workspace-soft); }
+.synky-shell :is(.practice-tabs button[data-state=active], .practice-module-list button[aria-pressed=true]) { background: var(--workspace-tint); color: var(--tenant-primary); border-color: var(--workspace-accent-line); }
+.synky-shell .practice-module-list button { color: var(--workspace-muted); border-color: var(--workspace-line); }
+.synky-shell .practice-lesson-steps span { background: var(--workspace-tint); color: var(--tenant-primary); }
+.synky-shell :is(.admin-role-guide strong, .admin-company-summary strong, .brand-control-title, .brand-preview-content strong) { color: var(--workspace-ink); }
+.synky-shell :is(.admin-role-guide span, .brand-preview-content p, .brand-preview-content small, .brand-preview-note, .brand-file-button) { color: var(--workspace-muted); }
+.synky-shell .brand-logo-tile { background: #f7faf8; border-color: var(--workspace-accent-line); }
+.synky-shell .public-preview-banner { background: var(--workspace-soft); border-color: var(--workspace-accent-line); color: var(--workspace-ink); }
+.synky-shell .public-preview-banner :is(strong, span) { color: inherit; }
+.synky-shell :is(.practice-tabs button, .practice-tip strong, .practice-example p, .practice-module-list button, .strategy-priority-top strong, .strategy-priority-bottom > span, .strategy-action-row strong, .strategy-agenda-row strong, .strategy-list-row strong, .decision-history-row strong, .work-queue-table td button strong, .result-evidence td strong, .admin-people-table td strong, .admin-record-row strong, .admin-export h2) { color: var(--workspace-ink); }
+.synky-shell :is(.practice-tabs button[data-state=active], .practice-module-list button[aria-pressed=true]) { color: var(--tenant-primary); }
+.synky-shell :is(.strategy-priority-main span, .strategy-priority-bottom b, .strategy-priority-indicator small, .work-queue-table td button span, .result-evidence td small, .result-evidence-note, .decision-history-row small, .admin-empty, .admin-export p, .admin-people-table td small, .admin-record-row span) { color: var(--workspace-muted); }
+.synky-shell :is(.insight-board-tabs, .insight-board-foot, .insight-board-item:hover, .insight-board-clear, .report-summary, .report-upgrade, .setup-choice-tabs, .setup-choice-panel) { background: var(--workspace-soft); border-color: var(--workspace-line); }
+.synky-shell :is(.insight-board-tabs button, .insight-board-clear, .insight-board-foot, .report-summary p, .report-upgrade p) { color: var(--workspace-muted); }
+.synky-shell :is(.insight-board-tabs button.active, .insight-board-clear > svg) { color: var(--tenant-primary); }
+.synky-shell .guide-shortcut { background: #fff; border-color: var(--workspace-line); }
+.synky-shell .admin-section-nav a { color: var(--workspace-muted); border-color: var(--workspace-line); background: #fff; }
+.synky-shell .admin-section-nav a:hover { color: var(--tenant-primary); background: var(--workspace-soft); }
+.synky-shell :is(.insight-board-head, .insight-board-tabs button) { background: #fff; border-color: var(--workspace-line); }
+.synky-shell :is(.insight-board-clear strong, .insight-board-copy strong, .workspace-setup-action strong) { color: var(--workspace-ink); }
+.synky-shell :is(.insight-board-tabs b, .insight-board-clear small, .insight-board-copy small, .workspace-setup-action p, .workspace-setup-head p) { color: var(--workspace-muted); }
+.synky-shell :is(.workspace-setup-switch, .workspace-setup-action, .admin-section-nav) { background: #f2f6f3; border-color: var(--workspace-line); }
+.synky-shell .workspace-setup-switch button { color: var(--workspace-muted); }
+.synky-shell .workspace-setup-switch button.active { color: var(--tenant-primary); border-color: var(--workspace-accent-line); }
+.synky-shell .report-intro-actions button { background: #fff; color: var(--tenant-primary); border-color: var(--workspace-line); }
+.synky-shell .org-switch-icon { color: var(--tenant-primary); }
+.synky-dialog { font-family: "DM Sans", "Segoe UI", sans-serif; border-color: var(--workspace-line); }
+.synky-dialog :is(.field-label, .detail-list p, .dialog-actions, [data-slot=dialog-title], [data-slot=alert-dialog-title]) { color: var(--workspace-ink); }
+.synky-dialog :is(.field-help, .field-hint, [data-slot=dialog-description], [data-slot=alert-dialog-description]) { color: var(--workspace-muted); }
+.synky-dialog .permission-preview { color: var(--workspace-ink); background: var(--workspace-soft); border-color: var(--workspace-accent-line); }
+.synky-dialog .permission-preview :is(svg, strong), .synky-dialog .form-section-heading { color: var(--tenant-primary); }
+.synky-shell :is(.premium-nav-button, .master-company-list > button, .strategy-tabs button, .insight-disclosure > summary):focus-visible { outline-color: var(--tenant-primary); }
+@media(max-width:700px) { .synky-shell .strategy-kpis { gap: 9px; } .synky-shell .strategy-kpis > div { padding: 14px; } .synky-shell .strategy-hero { padding: 20px; } }
+@media(prefers-reduced-motion:reduce) { .synky-shell .action-primary, .synky-dialog .action-primary { transition: none; } }
+@media print { .synky-shell :is(.report-intro, .strategy-meeting-head) { background: #fff; border: 1px solid #dce6df; } .synky-shell :is(.report-intro, .strategy-meeting-head) :is(h2, h3, .section-label, p, small) { color: #1c332c; } }

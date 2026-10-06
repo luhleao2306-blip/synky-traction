@@ -1,0 +1,73 @@
+/* Company directory only. Customer workspaces and the landing page keep their styles. */
+.synky-shell.company-directory-shell .app-header { height: 54px; min-height: 54px; background: #fff !important; }
+.synky-shell.company-directory-shell .header-workspace-context b { font-weight: 650; }
+.synky-shell.company-directory-shell .page-body { padding: 26px 28px 24px; background: #f5f7f9; }
+.synky-shell.company-directory-shell .page-title-row { margin: 0 0 22px; }
+.synky-shell.company-directory-shell .page-title-row h1 { color: #101820; font-size: clamp(1.8rem, 2.8vw, 2.25rem); line-height: 1.15; letter-spacing: -.035em; margin: 7px 0 5px; }
+.synky-shell.company-directory-shell .page-title-row p { color: #68778d; font-size: 1rem; line-height: 1.45; }
+.synky-shell.company-directory-shell .page-eyebrow { color: #64748b; font-size: .75rem; letter-spacing: .12em; }
+.synky-shell .directory-create-button { min-height: 44px; padding-inline: 18px; border-radius: 9px; gap: 12px; }
+.synky-shell .directory-create-button > span { font-size: 1.35rem; line-height: 1; }
+.synky-shell .company-directory-reference { display: grid; gap: 16px; --directory-ink: #111923; --directory-muted: #68778d; --directory-green: #00543e; }
+.synky-shell .directory-access-banner { display: flex; align-items: center; gap: 20px; padding: 18px 22px; border-radius: 12px; background: #00513d; color: #fff; min-height: 98px; }
+.synky-shell .directory-shield { display: grid; place-items: center; width: 57px; height: 57px; border: 1px solid #ffffff30; border-radius: 10px; flex: none; }
+.synky-shell .directory-access-banner > div { flex: 1; }
+.synky-shell .directory-access-banner strong { display: flex; align-items: center; gap: 12px; font-size: .9375rem; font-weight: 650; color: #fff; }
+.synky-shell .directory-access-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #d8f87a; flex: none; }
+.synky-shell .directory-access-banner p { color: #d8e9e2; margin: 6px 0 0 21px; font-size: .875rem; line-height: 1.4; }
+.synky-shell .directory-access-banner [data-slot=button] { color: #fff !important; border: 1px solid #a9c7bc !important; background: transparent !important; box-shadow: none; border-radius: 8px; gap: 10px; min-height: 40px; padding-inline: 16px; font-size: .875rem; }
+.synky-shell .directory-access-banner [data-slot=button]:hover { background: #ffffff16 !important; }
+.synky-shell .company-directory-reference .master-companies { padding: 22px; border: 1px solid #e3e8ee; border-radius: 13px; background: #fff; box-shadow: 0 4px 20px #18273804; }
+.synky-shell .company-directory-reference .panel-head { align-items: center; margin-bottom: 18px; }
+.synky-shell .company-directory-reference .panel-head h2 { color: var(--directory-ink); font-size: 1.25rem; margin: 0; line-height: 1.2; }
+.synky-shell .company-directory-reference .panel-head p { color: var(--directory-muted); font-size: .875rem; margin: 6px 0 0; }
+.synky-shell .company-directory-reference .count-chip { background: #e9f4ef; color: #00634a; border: 0; border-radius: 7px; padding: 4px 9px; font-size: .875rem; }
+.synky-shell .company-directory-reference .master-company-actions [data-slot=button] { min-height: 34px; font-size: .8125rem; padding-inline: 12px; }
+.synky-shell .directory-first-company { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; padding: 10px 0 20px; }
+.synky-shell .directory-company-art { display: flex; align-items: center; justify-content: center; min-width: 0; padding-right: 24px; }
+.synky-shell .directory-company-art img { width: 100%; max-width: 440px; height: 230px; object-fit: contain; }
+.synky-shell .directory-first-copy { border-left: 1px solid #e2e8ef; padding: 12px 24px 12px 38px; }
+.synky-shell .directory-first-copy h3 { color: var(--directory-ink); font-family: "DM Sans", "Segoe UI", sans-serif; font-size: clamp(1.5rem, 2.3vw, 1.9rem); font-weight: 750; letter-spacing: -.04em; line-height: 1.1; margin: 0 0 10px; }
+.synky-shell .directory-first-copy p { color: var(--directory-muted); font-size: 1rem; line-height: 1.5; max-width: 285px; margin: 0 0 20px; }
+.synky-shell .directory-first-copy [data-slot=button] { min-height: 44px; border-radius: 8px; gap: 10px; padding-inline: 17px; font-size: .875rem; }
+.synky-shell .directory-guide-link { display: flex; align-items: center; gap: 10px; color: #006e51; font-size: .875rem; text-decoration: underline; text-underline-offset: 3px; margin-top: 16px; padding: 4px 0; }
+.synky-shell .directory-benefits { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); border-top: 1px solid #e5eaf0; padding-top: 18px; gap: 18px; }
+.synky-shell .directory-benefits > div { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.synky-shell .directory-benefits > div + div { border-left: 1px solid #e5eaf0; padding-left: 24px; }
+.synky-shell .directory-benefits > div > span { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; flex: none; background: #eaf4ef; color: #007456; }
+.synky-shell .directory-benefits > div > div { display: grid; gap: 5px; }
+.synky-shell .directory-benefits strong { font-size: .8125rem; color: #253347; line-height: 1.35; }
+.synky-shell .directory-benefits small { font-size: .75rem; color: var(--directory-muted); line-height: 1.4; }
+.synky-shell .directory-footer { display: flex; align-items: center; justify-content: space-between; color: #748297; gap: 16px; }
+.synky-shell .directory-footer span { display: flex; gap: 10px; align-items: center; font-size: .75rem; }
+.synky-shell .directory-footer strong { font-size: .6875rem; letter-spacing: .12em; text-transform: uppercase; color: #5a687b; }
+.synky-shell .company-directory-reference button:focus-visible { outline: 2px solid #00835e; outline-offset: 3px; }
+.synky-shell .directory-access-banner button:focus-visible { outline-color: #d8f87a; }
+@media (max-width: 1100px) {
+  .synky-shell .directory-first-copy { padding-left: 24px; padding-right: 0; }
+  .synky-shell .directory-first-copy [data-slot=button] { padding-inline: 12px; font-size: .8125rem; }
+  .synky-shell .directory-benefits { gap: 10px; }
+  .synky-shell .directory-benefits > div { gap: 9px; }
+  .synky-shell .directory-benefits > div + div { padding-left: 12px; }
+}
+@media (max-width: 700px) {
+  .synky-shell.company-directory-shell .page-body { padding: 22px 16px; }
+  .synky-shell.company-directory-shell .page-title-row { gap: 14px; }
+  .synky-shell.company-directory-shell .header-workspace-context span { font-size: .75rem; }
+  .synky-shell .directory-access-banner { flex-wrap: wrap; gap: 14px; padding: 18px; }
+  .synky-shell .directory-access-banner > div { min-width: 180px; }
+  .synky-shell .directory-access-banner [data-slot=button] { margin-left: 71px; }
+  .synky-shell .company-directory-reference .master-companies { padding: 18px; }
+  .synky-shell .company-directory-reference .panel-head { flex-direction: row; align-items: flex-start; gap: 10px; }
+  .synky-shell .company-directory-reference .master-company-actions { width: auto; flex: none; }
+  .synky-shell .directory-first-company { grid-template-columns: 1fr; padding-bottom: 24px; }
+  .synky-shell .directory-company-art { padding: 0; }
+  .synky-shell .directory-company-art img { height: 190px; }
+  .synky-shell .directory-first-copy { border: 0; padding: 12px 0 0; }
+  .synky-shell .directory-first-copy h3 { font-size: 1.7rem; }
+  .synky-shell .directory-first-copy [data-slot=button] { font-size: .875rem; }
+  .synky-shell .directory-benefits { grid-template-columns: 1fr; gap: 16px; }
+  .synky-shell .directory-benefits > div + div { border: 0; padding-left: 0; }
+  .synky-shell .directory-benefits strong { font-size: .875rem; }
+  .synky-shell .directory-footer { align-items: flex-start; flex-wrap: wrap; }
+}

@@ -1,0 +1,81 @@
+.synky-dialog.record-form-dialog { width:min(960px,calc(100vw - 40px)); max-width:none; max-height:92dvh; padding:0; gap:0; display:flex; flex-direction:column; overflow:hidden; border-radius:18px; border-color:#dce5e0; background:#fff; box-shadow:0 30px 100px #0b30283d; }
+.record-form-dialog > [data-slot=dialog-header] { padding:22px 54px 18px 26px; border-bottom:1px solid #e3eae6; text-align:left; flex-shrink:0; }
+.record-form-dialog [data-slot=dialog-title] { font-size:1.5rem; line-height:1.25; letter-spacing:-.025em; }
+.record-form-dialog [data-slot=dialog-description] { font-size:.9375rem; line-height:1.5; color:#61756c; }
+.record-form-dialog .record-studio { display:flex; flex-direction:column; min-height:0; overflow:hidden; color:#20382f; }
+.record-studio-steps { display:flex; align-items:stretch; gap:8px; padding:16px 24px; border-bottom:1px solid #e6ece8; flex-shrink:0; background:#fbfcfb; }
+.record-studio-steps button { display:flex; align-items:center; gap:8px; flex:1; min-width:0; padding:9px 10px; font-size:.875rem; line-height:1.35; color:#63736d; text-align:left; border:1px solid transparent; border-radius:9px; cursor:pointer; }
+.record-studio-steps button b { font-weight:550; }
+.record-studio-steps button > span { width:24px; height:24px; flex-shrink:0; display:grid; place-items:center; border-radius:50%; background:#eaf0ed; color:#60776c; font-size:.8125rem; }
+.record-studio-steps button[aria-current=step] { color:var(--tenant-primary,#00815b); border-color:color-mix(in srgb,var(--tenant-primary,#00815b),white 75%); background:color-mix(in srgb,var(--tenant-primary,#00815b),white 94%); }
+.record-studio-steps button[aria-current=step] > span { background:var(--tenant-primary,#00815b); color:#fff; }
+.record-studio-steps button:hover { background:#eef4f0; }
+.record-studio-layout { display:grid; grid-template-columns:minmax(0,1fr) 238px; grid-auto-rows:max-content; align-content:start; min-height:0; overflow-y:auto; overscroll-behavior:contain; }
+.record-studio-main { padding:24px 26px 28px; min-width:0; min-height:350px; }
+.record-step-heading { margin-bottom:22px; }
+.record-step-heading > span { font-size:.75rem; color:#6b7e73; letter-spacing:.055em; font-weight:600; }
+.record-step-heading h3 { font-size:1.25rem; margin:5px 0 6px; font-weight:650; color:#173b2e; letter-spacing:-.015em; }
+.record-step-heading p { font-size:.9375rem; line-height:1.5; color:#65796e; margin:0; }
+.record-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 18px; }
+.record-field { min-width:0; display:flex; flex-direction:column; gap:7px; }
+.record-field-wide { grid-column:1/-1; }
+.record-field > label { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; font-size:.9375rem; line-height:1.4; font-weight:600; color:#233e31; }
+.record-field > label > span { font-size:.75rem; font-weight:400; color:#75847d; }
+.record-field :is(input,textarea,[data-slot=select-trigger]) { width:100%; min-height:44px; border:1px solid #cad8d0; border-radius:9px; background:#fff; font-size:1rem; font-weight:400; color:#253d32; box-shadow:none; }
+.record-field input { padding:10px 12px; }
+.record-field textarea { padding:11px 12px; resize:vertical; min-height:105px; line-height:1.5; }
+.record-field [data-slot=select-trigger] { padding:10px 12px; height:auto; text-align:left; }
+.record-field [data-slot=select-value] { white-space:normal; overflow-wrap:anywhere; }
+.record-field :is(input,textarea,[data-slot=select-trigger]):focus-visible { border-color:var(--tenant-primary,#00815b); outline:3px solid color-mix(in srgb,var(--tenant-primary,#00815b),transparent 83%); outline-offset:1px; }
+.record-field :is(input,textarea,[data-slot=select-trigger])[aria-invalid=true] { border-color:#be483f; background:#fffafa; }
+.record-field-help { display:block; font-size:.875rem; line-height:1.5; color:#63796b; font-weight:400; }
+.record-field-help:empty { display:none; }
+.record-field-error,.record-validation-message { font-size:.875rem; line-height:1.5; color:#a6352c; font-weight:500; }
+.record-validation-message { margin:16px 0 0; }
+.record-studio-context { background:#f5f8f6; border-left:1px solid #e4ece7; padding:24px 19px; display:flex; flex-direction:column; gap:24px; min-width:0; }
+.record-company { display:flex; align-items:center; gap:10px; color:var(--tenant-primary,#00815b); }
+.record-company svg { flex-shrink:0; }
+.record-company small,.record-context-block > small { display:block; color:#6d8076; font-size:.75rem; font-weight:600; letter-spacing:.04em; margin-bottom:4px; }
+.record-company strong,.record-context-block > strong { display:block; font-size:.9375rem; font-weight:600; line-height:1.4; overflow-wrap:anywhere; color:#264737; }
+.record-completion svg { color:var(--tenant-primary,#00815b); margin-bottom:8px; }
+.record-completion h4 { margin:0 0 6px; font-size:.875rem; font-weight:600; color:#294636; }
+.record-completion p { margin:0 0 10px; font-size:.875rem; color:#617468; }
+.record-completion progress { width:100%; height:6px; border:0; border-radius:5px; accent-color:var(--tenant-primary,#00815b); }
+.record-completion progress::-webkit-progress-bar { background:#dfe9e3; border-radius:5px; }
+.record-completion progress::-webkit-progress-value { background:var(--tenant-primary,#00815b); border-radius:5px; }
+.record-context-block > p,.record-context-block details p { font-size:.875rem; line-height:1.5; color:#5f7568; margin:7px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.record-context-block details { border-top:1px solid #dce6df; padding-top:10px; margin-top:10px; }
+.record-context-block summary { font-size:.875rem; color:#315643; cursor:pointer; }
+.record-human-note { display:flex; align-items:flex-start; gap:9px; color:var(--tenant-primary,#00815b); }
+.record-human-note svg { flex-shrink:0; margin-top:2px; }
+.record-human-note p,.record-save-note { font-size:.875rem; line-height:1.5; color:#5a7162; margin:0; }
+.record-save-note { margin-top:auto; padding-top:14px; border-top:1px solid #dce6df; }
+.record-save-note strong { font-weight:600; }
+.record-studio-footer { flex-shrink:0; display:flex; align-items:center; gap:12px; padding:16px 24px; border-top:1px solid #dfe7e1; background:#fff; }
+.record-studio-footer > span { margin-left:auto; color:#687c70; font-size:.875rem; }
+.record-studio-footer > div { display:flex; gap:8px; }
+.record-studio-footer [data-slot=button] { min-height:42px; font-size:.9375rem; border-radius:9px; }
+.record-studio-error { display:flex; align-items:flex-start; gap:10px; padding:14px; margin-bottom:20px; background:#fff4f2; border:1px solid #ebc8c2; border-radius:9px; color:#9b342a; font-size:.9375rem; }
+.record-studio-error svg { flex-shrink:0; margin-top:2px; }
+.record-studio-error p { font-size:.875rem; line-height:1.5; margin:5px 0 0; }
+.record-review-title { display:flex; gap:12px; align-items:center; border:1px solid #dce7df; border-radius:10px; padding:16px; background:#f8fbf9; margin-bottom:20px; }
+.record-review-title svg { flex-shrink:0; color:var(--tenant-primary,#00815b); }
+.record-review-title > div { min-width:0; }
+.record-review-title small { display:block; font-size:.8125rem; color:#718377; }
+.record-review-title strong { font-size:1rem; overflow-wrap:anywhere; }
+.record-review-title > button { margin-left:auto; }
+.record-review-group { padding:17px 0; border-top:1px solid #e5ebe7; }
+.record-review-group header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.record-review-group h4 { margin:0; font-size:.9375rem; font-weight:650; color:#274636; }
+.record-review-group button,.record-review-title button { color:var(--tenant-primary,#00815b); font-size:.875rem; font-weight:600; padding:5px 8px; cursor:pointer; }
+.record-review-group dl { display:grid; gap:14px; margin:0; }
+.record-review-group dt { font-size:.8125rem; color:#6f8076; margin-bottom:4px; }
+.record-review-group dd { font-size:.9375rem; line-height:1.5; color:#254032; margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.record-review-group dd.record-review-missing { color:#a6352c; }
+.record-review-group dd small { display:block; font-size:.875rem; }
+.record-studio button:focus-visible { outline:3px solid #78aa91; outline-offset:2px; }
+@media(max-width:720px) { .synky-dialog.record-form-dialog { width:calc(100vw - 24px); max-height:94dvh; border-radius:14px; } .record-form-dialog > [data-slot=dialog-header] { padding:20px 44px 15px 18px; } .record-studio-steps { padding:12px; gap:5px; flex-wrap:wrap; } .record-studio-steps button { flex:1 1 calc(50% - 10px); padding:7px; } .record-studio-layout { grid-template-columns:minmax(0,1fr); } .record-studio-main { padding:20px 18px 24px; min-height:0; } .record-studio-context { border-left:0; border-top:1px solid #e0e9e3; padding:18px; gap:18px; } .record-completion { display:none; } .record-studio-footer { padding:12px; gap:8px; flex-wrap:wrap; } .record-studio-footer > span { font-size:.8125rem; } .record-studio-footer > div { margin-left:auto; } .record-studio-footer [data-slot=button] { font-size:.875rem; padding:8px 12px; } }
+@media(max-width:480px) { .record-fields { grid-template-columns:minmax(0,1fr); gap:18px; } .record-studio-footer > span { display:none; } .record-form-dialog [data-slot=dialog-title] { font-size:1.3rem; } }
+.record-character-count { font-size:.75rem; text-align:right; color:#718478; font-weight:400; margin-top:-3px; }
+.synky-dialog.access-form-dialog { width:min(600px,calc(100vw - 24px)); max-width:none; padding:0; overflow:hidden; display:flex; flex-direction:column; gap:0; max-height:92dvh; } .access-form-dialog > [data-slot=dialog-header] { padding:24px 48px 20px 24px; text-align:left; border-bottom:1px solid #e1e9e4; } .access-studio { display:flex; flex-direction:column; overflow:hidden; min-height:0; } .access-studio-body { padding:24px; overflow-y:auto; display:grid; gap:20px; } .access-permission-card { display:flex; gap:12px; background:#f0f7f3; border:1px solid #d3e7dc; padding:16px; border-radius:12px; color:var(--tenant-primary); } .access-permission-card svg { flex-shrink:0; margin-top:3px; } .access-permission-card h3 { font-size:1rem; margin:0 0 6px; font-weight:650; color:#244b37; } .access-permission-card p,.access-permission-card small { font-size:.9375rem; line-height:1.5; margin:0; color:#436352; } .access-permission-card small { display:block; margin-top:8px; } .access-studio .record-studio-footer > div { margin-left:auto; }
+.record-field textarea[data-slot=textarea] { min-height:105px; }

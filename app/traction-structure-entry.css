@@ -1,0 +1,68 @@
+/* Global structure entry only; company structure and public LP remain unchanged. */
+.synky-shell.structure-entry-shell .app-header { height:54px; min-height:54px; background:#fff !important; }
+.synky-shell.structure-entry-shell .page-body { padding:24px 26px; background:#f5f7f9; }
+.synky-shell .structure-entry { display:grid; gap:17px; --structure-ink:#162532; --structure-muted:#738392; }
+.synky-shell .structure-entry-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.synky-shell .structure-entry-heading > div:first-child > span { font-size:.75rem; font-weight:650; color:#74808e; letter-spacing:.025em; }
+.synky-shell .structure-entry-heading h1 { color:var(--structure-ink); font-size:2.5rem; line-height:1.15; letter-spacing:-.045em; font-weight:750; margin:4px 0 5px; }
+.synky-shell .structure-entry-heading p { color:var(--structure-muted); font-size:1rem; margin:0; line-height:1.5; }
+.synky-shell .structure-entry-controls { display:flex; flex-direction:column; align-items:flex-end; gap:18px; flex:1; }
+.synky-shell .structure-entry-access { color:#14573e; background:#edf7df; border-radius:20px; padding:7px 11px; display:flex; align-items:center; gap:6px; font-size:.75rem; font-weight:650; white-space:nowrap; }
+.synky-shell .structure-entry-controls > div { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.synky-shell .structure-entry-controls [data-slot=button] { border-radius:8px; font-size:.8125rem; min-height:36px; border-color:#c5d6cf; }
+.synky-shell .structure-entry-controls [data-slot=button][data-variant=outline] { color:#14573e; }
+.synky-shell .structure-entry-modules { background:#073f33; color:#fff; }
+.synky-shell .structure-entry-layout { display:grid; grid-template-columns:250px minmax(0,1fr); gap:17px; align-items:stretch; }
+.synky-shell .structure-entry-setup { position:relative; overflow:hidden; background:linear-gradient(145deg,#005640,#00392d); padding:23px 21px 18px; border-radius:12px; color:#fff; }
+.synky-shell .structure-entry-building { display:grid; place-items:center; width:43px; height:43px; border-radius:50%; background:#ffffff12; color:#adcfbf; }
+.synky-shell .structure-entry-setup h2 { color:#fff; font-size:1.4rem; font-weight:720; line-height:1.2; letter-spacing:-.025em; margin:14px 0 9px; }
+.synky-shell .structure-entry-setup > p { color:#b3cdc2; font-size:.875rem; line-height:1.5; margin:0 0 17px; }
+.synky-shell .structure-entry-create { width:100%; background:#d8f68b; color:#073d30; font-size:.8125rem; font-weight:700; min-height:40px; border-radius:12px; box-shadow:none; }
+.synky-shell .structure-entry-create:hover { background:#c9ef72; color:#073d30; }
+.synky-shell.structure-entry-shell .structure-entry-setup [data-slot=button].structure-entry-create { background:#d8f68b !important; border-color:#d8f68b !important; color:#073d30 !important; }
+.synky-shell.structure-entry-shell .structure-entry-setup [data-slot=button].structure-entry-create:hover { background:#c9ef72 !important; border-color:#c9ef72 !important; }
+.synky-shell.structure-entry-shell .structure-entry-controls [data-slot=button].structure-entry-modules { background:#073f33 !important; border-color:#073f33 !important; color:#fff !important; }
+.synky-shell .structure-entry-links { border-top:1px solid #ffffff22; margin-top:18px; padding-top:13px; display:grid; gap:10px; }
+.synky-shell .structure-entry-links > button { display:flex; align-items:center; gap:11px; width:100%; text-align:left; border-radius:7px; padding:5px 0; }
+.synky-shell .structure-entry-links > button:hover { background:#ffffff0c; }
+.synky-shell .structure-entry-links svg { flex-shrink:0; color:#b6d2c7; }
+.synky-shell .structure-entry-links svg:last-child { margin-left:auto; }
+.synky-shell .structure-entry-links strong { display:block; font-size:.8125rem; font-weight:650; color:#f6fbf8; }
+.synky-shell .structure-entry-links small { display:block; color:#b3cdc2; font-size:.75rem; margin-top:3px; line-height:1.4; }
+.synky-shell .structure-entry-preview { background:#fff; border:1px solid #e3e9ed; border-radius:12px; padding:22px 21px 15px; min-width:0; display:flex; flex-direction:column; }
+.synky-shell .structure-entry-preview > header { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
+.synky-shell .structure-entry-preview > header > svg { color:#005d45; flex-shrink:0; }
+.synky-shell .structure-entry-preview > header > div:nth-child(2) { flex:1; min-width:200px; }
+.synky-shell .structure-entry-preview h2 { font-size:.9375rem; font-weight:700; color:var(--structure-ink); margin:0 0 4px; }
+.synky-shell .structure-entry-preview header p { color:var(--structure-muted); font-size:.75rem; line-height:1.5; margin:0; }
+.synky-shell .structure-entry-legend { display:flex; gap:12px; font-size:.6875rem; color:#6c8d83; flex-wrap:wrap; }
+.synky-shell .structure-entry-legend > span { display:flex; align-items:center; gap:5px; }
+.synky-shell .structure-entry-legend i { width:9px; height:9px; border-radius:50%; background:#006548; }
+.synky-shell .structure-entry-legend > span:nth-child(2) i { background:#d1ef7a; }
+.synky-shell .structure-entry-legend > span:nth-child(3) i { background:#c6e5d7; }
+.synky-shell .structure-entry-diagram { width:100%; height:265px; position:relative; margin:23px 0 0; flex-shrink:0; }
+.synky-shell .structure-entry-diagram > svg { width:100%; height:100%; position:absolute; inset:0; stroke:#bdd0c9; stroke-width:1.25; }
+.synky-shell .structure-node { position:relative; display:flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid #e1eee7; background:#f3f9f5; color:#006347; }
+.synky-shell .structure-node-company { width:110px; height:47px; margin:0 auto; background:#f7fbf7; box-shadow:0 3px 8px #143b2710; }
+.synky-shell .structure-diagram-branches { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin-top:42px; }
+.synky-shell .structure-diagram-area { min-width:0; }
+.synky-shell .structure-node-area { height:38px; width:100px; margin:0 auto; background:#eff7f4; }
+.synky-shell .structure-diagram-roles { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:33px; }
+.synky-shell .structure-node-role { width:57px; height:37px; margin:0 auto; background:#f7fbea; border-color:#eaf3d5; color:#78a62c; }
+.synky-shell .structure-diagram-duties { display:flex; justify-content:center; gap:8px; margin-top:23px; }
+.synky-shell .structure-node-duty { width:31px; height:31px; border-radius:8px; background:#f2f8f5; color:#87bda8; border-color:#e9f1ec; }
+.synky-shell .structure-entry-picker { display:flex; align-items:center; gap:9px; flex-wrap:wrap; border-top:1px solid #e5ece8; padding-top:14px; margin-top:9px; }
+.synky-shell .structure-entry-picker label { color:var(--structure-ink); font-weight:600; font-size:.875rem; }
+.synky-shell .structure-entry-picker select { min-width:0; flex:1; background:#fff; padding:8px; border:1px solid #cadcd3; border-radius:8px; font-size:.875rem; color:#233f33; }
+.synky-shell .structure-entry-features { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); background:#fff; border:1px solid #e3e9ed; border-radius:12px; padding:21px 20px; }
+.synky-shell .structure-entry-features > div { display:flex; gap:15px; padding:0 18px; align-items:flex-start; }
+.synky-shell .structure-entry-features > div + div { border-left:1px solid #ebeff2; }
+.synky-shell .structure-entry-features > div > span { display:grid; place-items:center; width:43px; height:43px; border-radius:50%; background:#dff49e; color:#00604a; flex-shrink:0; }
+.synky-shell .structure-entry-features > div:nth-child(2) > span,.synky-shell .structure-entry-features > div:nth-child(3) > span { background:#d5ede2; }
+.synky-shell .structure-entry-features h2 { font-size:.875rem; font-weight:700; color:var(--structure-ink); margin:3px 0 5px; }
+.synky-shell .structure-entry-features p { color:var(--structure-muted); font-size:.8125rem; line-height:1.5; margin:0; }
+.synky-shell .structure-entry-error { color:#9d2525; padding:12px; border:1px solid #edd0d0; background:#fff4f4; border-radius:8px; font-size:.875rem; }
+.synky-shell .structure-entry button:focus-visible,.synky-shell .structure-entry select:focus-visible { outline:3px solid #398b70; outline-offset:3px; }
+@media(max-width:1200px) { .synky-shell .structure-entry-heading h1 { font-size:2.2rem; } .synky-shell .structure-entry-layout { grid-template-columns:230px minmax(0,1fr); } .synky-shell .structure-entry-controls { gap:11px; } .synky-shell .structure-entry-controls > div { max-width:470px; } .synky-shell .structure-entry-preview { padding:20px 16px 13px; } .synky-shell .structure-entry-features { padding:18px 8px; } .synky-shell .structure-entry-features > div { padding:0 12px; gap:11px; } }
+@media(max-width:850px) { .synky-shell .structure-entry-heading { align-items:flex-start; } .synky-shell .structure-entry-controls { flex-basis:100%; align-items:flex-start; } .synky-shell .structure-entry-controls > div { justify-content:flex-start; max-width:none; } .synky-shell .structure-entry-layout { grid-template-columns:minmax(0,1fr); } .synky-shell .structure-entry-setup h2 br { display:none; } .synky-shell .structure-entry-setup { padding:22px; } .synky-shell .structure-entry-links { grid-template-columns:1fr 1fr; gap:18px; } .synky-shell .structure-entry-create { max-width:240px; } .synky-shell .structure-entry-features { grid-template-columns:1fr; padding:8px 20px; } .synky-shell .structure-entry-features > div { padding:16px 0; } .synky-shell .structure-entry-features > div + div { border-left:0; border-top:1px solid #ebeff2; } }
+@media(max-width:480px) { .synky-shell.structure-entry-shell .page-body { padding:18px 16px; } .synky-shell .structure-entry-heading h1 { font-size:2rem; } .synky-shell .structure-entry-heading p { font-size:.9375rem; } .synky-shell .structure-entry-controls { gap:12px; } .synky-shell .structure-entry-controls [data-slot=button] { flex:1 1 45%; } .synky-shell .structure-entry-preview { padding:18px 12px 12px; } .synky-shell .structure-entry-legend { gap:10px; font-size:.75rem; } .synky-shell .structure-entry-preview > header > div:nth-child(2) { min-width:190px; } .synky-shell .structure-entry-diagram { height:240px; } .synky-shell .structure-entry-diagram > svg { height:265px; } .synky-shell .structure-node-company { width:70px; } .synky-shell .structure-node-area { width:60px; } .synky-shell .structure-node-role { width:37px; } .synky-shell .structure-node-duty { width:20px; height:27px; border-radius:5px; } .synky-shell .structure-diagram-duties { gap:3px; } .synky-shell .structure-entry-links { grid-template-columns:1fr; gap:8px; } .synky-shell .structure-entry-picker select { flex-basis:100%; } }

@@ -1,0 +1,1 @@
+ALTER TABLE `organizations` ADD `report_access_until` text;

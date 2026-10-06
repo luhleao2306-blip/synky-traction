@@ -1,0 +1,48 @@
+/* Master entry for hiring. Company records and public landing page retain their UI. */
+.synky-shell.hiring-entry-shell .app-header { height:54px; min-height:54px; background:#fff !important; }
+.synky-shell.hiring-entry-shell .page-body { padding:22px 27px 24px; background:#f5f7f9; }
+.synky-shell .hiring-entry { display:grid; gap:16px; --hiring-ink:#112d32; --hiring-muted:#788d98; }
+.synky-shell .hiring-entry-heading > span { font-size:.75rem; color:#7c8a94; font-weight:650; letter-spacing:.035em; }
+.synky-shell .hiring-entry-heading h1 { color:var(--hiring-ink); font-size:2.1rem; line-height:1.15; letter-spacing:-.035em; font-weight:750; margin:5px 0 4px; }
+.synky-shell .hiring-entry-heading > p { color:#6c818c; font-size:.9375rem; line-height:1.5; margin:0; }
+.synky-shell .hiring-entry-hero { display:grid; grid-template-columns:minmax(0,1.75fr) minmax(180px,1fr) 180px; gap:21px; align-items:center; border-radius:10px; padding:23px 28px; color:#fff; background:linear-gradient(115deg,#004b3d,#00463a 66%,#075849); overflow:hidden; }
+.synky-shell .hiring-entry-hero h2 { font-size:1.75rem; letter-spacing:-.025em; font-weight:750; line-height:1.18; color:#fff; margin:0 0 7px; }
+.synky-shell .hiring-entry-hero h2 em { color:#d8f68b; font-style:normal; }
+.synky-shell .hiring-entry-hero-copy > p { font-size:.875rem; line-height:1.5; color:#e3f1e9; margin:0 0 14px; }
+.synky-shell .hiring-entry-hero-copy > div { display:flex; flex-wrap:wrap; gap:11px; }
+.synky-shell .hiring-entry-hero-copy [data-slot=button] { font-size:.8125rem; min-height:38px; border-radius:7px; }
+.synky-shell.hiring-entry-shell .hiring-entry-hero-copy [data-slot=button].hiring-entry-create { background:#d8f68b !important; border-color:#d8f68b !important; color:#073d30 !important; box-shadow:none; }
+.synky-shell.hiring-entry-shell .hiring-entry-hero-copy [data-slot=button].hiring-entry-create:hover { background:#c9ef72 !important; border-color:#c9ef72 !important; }
+.synky-shell .hiring-entry-hero-copy .hiring-entry-central { border:1px solid #d5ece477; color:#fff; background:transparent; }
+.synky-shell .hiring-entry-hero-copy .hiring-entry-central:hover { background:#ffffff0c; color:#fff; }
+.synky-shell .hiring-entry-access { border-left:1px solid #80af994f; padding-left:20px; }
+.synky-shell .hiring-entry-access > span { display:flex; align-items:center; gap:9px; color:#d8f68b; font-size:.8125rem; font-weight:650; }
+.synky-shell .hiring-entry-access p { color:#c4dbce; font-size:.8125rem; line-height:1.6; margin:7px 0 0 27px; }
+.synky-shell .hiring-entry-art { width:180px; height:135px; object-fit:contain; display:block; }
+.synky-shell .hiring-entry-flow { background:#fff; border:1px solid #e1e8ec; border-radius:12px; padding:20px; min-width:0; }
+.synky-shell .hiring-entry-flow > header { display:flex; align-items:flex-start; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+.synky-shell .hiring-entry-flow > header > div > span { color:#6f8490; font-size:.75rem; }
+.synky-shell .hiring-entry-flow h2 { color:var(--hiring-ink); font-size:1.25rem; font-weight:750; letter-spacing:-.025em; line-height:1.25; margin:3px 0 5px; }
+.synky-shell .hiring-entry-flow header p { font-size:.8125rem; line-height:1.5; margin:0; color:var(--hiring-muted); }
+.synky-shell .hiring-entry-actions { display:flex; align-items:center; gap:9px; flex-wrap:wrap; }
+.synky-shell .hiring-entry-actions [data-slot=button] { font-size:.8125rem; min-height:35px; border-radius:8px; }
+.synky-shell .hiring-entry-stages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:29px; margin:19px 0 0; padding:0; list-style:none; }
+.synky-shell .hiring-entry-stages > li { position:relative; background:#f7f9fa; border:1px solid #edf1f3; border-radius:11px; padding:17px 16px 15px; min-width:0; }
+.synky-shell .hiring-entry-stages li > header { display:flex; align-items:center; gap:12px; }
+.synky-shell .hiring-entry-stages li > header > span { width:42px; height:42px; border-radius:10px; color:#00684e; background:#e0f0e7; display:grid; place-items:center; flex-shrink:0; }
+.synky-shell .hiring-entry-stages h3 { color:var(--hiring-ink); font-size:.9375rem; font-weight:750; margin:0 0 5px; }
+.synky-shell .hiring-entry-stages li > header p { color:#4c8184; font-size:.75rem; }
+.synky-shell .hiring-stage-accent { display:block; width:25px; height:3px; background:#d0ee83; margin:12px 0 10px; border-radius:3px; }
+.synky-shell .hiring-stage-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:158px; padding:19px 20px; border:1px dashed #dce6e9; border-radius:11px; color:#91a2ac; }
+.synky-shell .hiring-stage-empty > p { font-size:.8125rem; color:#7a909c; line-height:1.6; text-align:center; margin:11px 0 16px; }
+.synky-shell .hiring-stage-empty > span { background:#edf1f3; height:7px; width:100%; border-radius:7px; }
+.synky-shell .hiring-stage-empty > span:last-child { width:62%; align-self:flex-start; margin-top:7px; }
+.synky-shell .hiring-stage-connector { position:absolute; right:-26px; top:49%; color:#98a9af; }
+.synky-shell .hiring-entry-picker { display:flex; align-items:center; gap:10px; flex-wrap:wrap; border-top:1px solid #e3ebe7; padding-top:15px; margin-top:18px; }
+.synky-shell .hiring-entry-picker label { font-size:.875rem; font-weight:600; color:var(--hiring-ink); }
+.synky-shell .hiring-entry-picker select { min-width:0; flex:1; font-size:.875rem; background:#fff; color:#234334; border:1px solid #d2dfd9; padding:10px; border-radius:8px; }
+.synky-shell .hiring-entry-error { color:#9d2525; background:#fff4f4; border:1px solid #edd0d0; padding:12px; border-radius:8px; font-size:.875rem; margin-top:15px; }
+.synky-shell .hiring-entry button:focus-visible,.synky-shell .hiring-entry select:focus-visible { outline:3px solid #398b70; outline-offset:3px; }
+@media(max-width:1150px) { .synky-shell .hiring-entry-hero { grid-template-columns:minmax(0,1.6fr) minmax(170px,1fr) 140px; padding:22px; gap:16px; } .synky-shell .hiring-entry-hero h2 { font-size:1.55rem; } .synky-shell .hiring-entry-art { width:140px; height:120px; } .synky-shell .hiring-entry-stages { gap:22px; } .synky-shell .hiring-entry-stages > li { padding:15px 12px; } .synky-shell .hiring-stage-connector { right:-22px; } }
+@media(max-width:850px) { .synky-shell .hiring-entry-hero { grid-template-columns:minmax(0,1fr) 130px; } .synky-shell .hiring-entry-access { grid-column:1 / -1; grid-row:2; border-left:0; border-top:1px solid #80af994f; padding:15px 0 0; } .synky-shell .hiring-entry-access p { margin-left:27px; } .synky-shell .hiring-entry-art { width:130px; } .synky-shell .hiring-entry-stages { grid-template-columns:1fr; gap:20px; } .synky-shell .hiring-stage-empty { min-height:145px; } .synky-shell .hiring-stage-connector { top:auto; bottom:-21px; right:48%; transform:rotate(90deg); } }
+@media(max-width:480px) { .synky-shell.hiring-entry-shell .page-body { padding:18px 16px; } .synky-shell .hiring-entry-heading h1 { font-size:1.9rem; } .synky-shell .hiring-entry-hero { padding:22px 20px; grid-template-columns:minmax(0,1fr); gap:12px; } .synky-shell .hiring-entry-art { width:120px; height:95px; position:absolute; right:15px; bottom:16px; opacity:.8; } .synky-shell .hiring-entry-hero { position:relative; } .synky-shell .hiring-entry-access { padding-right:94px; min-height:122px; } .synky-shell .hiring-entry-access p { margin-left:0; } .synky-shell .hiring-entry-hero h2 { font-size:1.65rem; } .synky-shell .hiring-entry-hero-copy > div { gap:9px; } .synky-shell .hiring-entry-hero-copy [data-slot=button] { flex:1 1 100%; } .synky-shell .hiring-entry-flow { padding:17px 15px; } .synky-shell .hiring-entry-picker select { flex-basis:100%; } }
