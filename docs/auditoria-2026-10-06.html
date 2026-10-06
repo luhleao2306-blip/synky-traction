@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Synky Traction — Revisão de funcionamento</title>
+<style>
+body{margin:0;background:#f5f7f8;color:#152b24;font:16px/1.6 system-ui,sans-serif}main{max-width:1000px;margin:40px auto;padding:32px;background:white;border:1px solid #dce5df;border-radius:16px}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin-top:32px}.tag{color:#006f50;font-weight:700}.summary{display:flex;gap:16px;flex-wrap:wrap}.summary div{padding:16px 24px;background:#edf6f1;border-radius:12px}.summary strong{display:block;font-size:28px}table{border-collapse:collapse;width:100%}td,th{padding:12px;text-align:left;border-bottom:1px solid #dce5df}th{background:#f0f5f2}small{color:#52665d}li{margin:8px 0}a{color:#006f50}.note{padding:16px 20px;background:#f5f7f8;border-left:4px solid #007d57}@media(max-width:600px){main{margin:12px;padding:20px}h1{font-size:26px}td,th{padding:8px;font-size:14px}}
+</style>
+<main>
+<p class="tag">SYNKY TRACTION · 06/10/2026</p>
+<h1>Revisão de funcionamento</h1>
+<p>Teste dos módulos existentes, gravações, permissões e navegação. As operações que criam ou alteram registros foram realizadas em um banco local isolado. O ambiente publicado foi consultado com o acesso master existente.</p>
+<div class="summary"><div><strong>189</strong>verificações automáticas aprovadas</div><div><strong>11</strong>áreas verificadas na navegação</div><div><strong>390 px</strong>largura do teste de celular</div></div>
+<h2>Verificações automáticas</h2>
+<table><thead><tr><th>Grupo</th><th>Verificações</th><th>Resultado</th></tr></thead><tbody>
+<tr><td>Login, criação e persistência dos registros, arquivo e acesso entre empresas</td><td>41</td><td>Aprovado</td></tr>
+<tr><td>Perfis de acesso, vínculos, datas, concorrência, relatórios, logo e sessões</td><td>49</td><td>Aprovado</td></tr>
+<tr><td>Administrador master e isolamento de administradores comuns</td><td>11</td><td>Aprovado</td></tr>
+<tr><td>Entrada da LP, login, redirecionamento e destino seguro</td><td>7</td><td>Aprovado</td></tr>
+<tr><td>Cadastro completo da empresa, identidade e validações</td><td>23</td><td>Aprovado</td></tr>
+<tr><td>Campos dos registros, vínculos, valores, prazos e edição</td><td>24</td><td>Aprovado</td></tr>
+<tr><td>Equipe, contratação, tarefas, promoção, desligamento e acessos</td><td>23</td><td>Aprovado</td></tr>
+<tr><td>Etapas das vagas, persistência, conflito e permissões</td><td>11</td><td>Aprovado</td></tr>
+</tbody></table>
+<h2>O que foi conferido nas telas</h2>
+<ul>
+<li>Dashboard, Central de empresas, Plano do ciclo, Reuniões e decisões, Resultados, Áreas e cargos, Equipe, Contratações, Evolução interna, Boas práticas e Administração.</li>
+<li>O botão Painel da página publicada abriu o painel no domínio novo com a sessão master existente. A barra lateral permaneceu disponível ao trocar os módulos.</li>
+<li>Busca geral com resultado identificado por módulo; filtro de áreas com estado vazio; filtro de seções do relatório e abertura da evidência vinculada.</li>
+<li>Preenchimento de uma prioridade até a revisão final, validação de campos obrigatórios, seleção de objetivo e data, salvamento e reapresentação do registro.</li>
+<li>Abertura e cancelamento de formulários de revisão, decisão, área, cargo, vaga, candidato, avaliação de contratação, avaliação de promoção, desenvolvimento e tarefa.</li>
+<li>Solicitação de atualização para uma reunião e mudança de etapa de uma vaga pelo seletor, com confirmação de gravação.</li>
+<li>Relatório completo com oito seções, período e valor zero explícito. O resumo gratuito e as restrições de acesso foram conferidos no servidor.</li>
+<li>No celular, troca de módulos pelo menu e largura da página sem transbordamento. Tabelas e quadro de vagas mantêm sua rolagem própria.</li>
+<li>Cor sem contraste desabilita a aplicação da identidade. Cadastro completo com logo, cores e nome persistiu e respeitou o acesso por empresa nos testes de gravação.</li>
+</ul>
+<h2>Correção desta revisão</h2>
+<p>O nome longo da empresa se sobrepunha à frase no cabeçalho da barra lateral. O espaço agora acompanha a altura do nome, limitado a duas linhas, sem invadir a legenda. A verificação das posições dos elementos confirmou que a sobreposição foi removida.</p>
+<h2>Banco e preservação dos dados</h2>
+<p>O banco Cloudflare D1 atual foi mantido, conforme a escolha do proprietário. A conexão e as tabelas de empresas, registros e acessos foram verificadas pela hospedagem. Nenhuma empresa fictícia foi criada no banco publicado para esta revisão. Nenhuma migração de banco foi realizada.</p>
+<p>A landing page não teve seu conteúdo, componentes, imagens ou estilos alterados. A correção visual está limitada à barra lateral do painel.</p>
+<h2>Limites e próximos cuidados</h2>
+<div class="note">Esta revisão comprova os fluxos descritos acima; não representa garantia de ausência de qualquer falha em todo navegador, aparelho ou combinação futura de dados.</div>
+<ul>
+<li>A exportação da empresa foi aprovada nos testes do servidor. A confirmação do arquivo baixado pelo navegador ficou inconclusiva após interrupção do controle do navegador durante esse teste.</li>
+<li>A impressão e o salvamento em PDF dependem do diálogo de impressão do navegador; a qualidade do arquivo impresso não foi certificada nesta revisão.</li>
+<li>A diferenciação entre resumo gratuito e relatório completo está funcional. Não foi localizada integração de cobrança automática; os testes do plano completo usaram a autorização existente, em ambiente isolado.</li>
+<li>Os acessos gerados são compartilhados manualmente pelo administrador. Esta revisão não testou envio de credenciais por email nem adicionou envio automático.</li>
+<li>Os testes de celular usam o tamanho de tela de um navegador; não substituem teste físico em aparelhos Android e iPhone.</li>
+</ul>
+<p><a href="https://traction.synky.com.br/painel">Abrir o painel</a> · <a href="https://github.com/luhleao2306-blip/synky-traction">Código no GitHub</a></p>
+</main></html>

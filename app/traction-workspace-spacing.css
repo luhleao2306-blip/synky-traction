@@ -47,6 +47,20 @@
 .synky-shell.reference-fidelity-shell .meetings-reference-art { position: static; width: 100%; max-width: 390px; height: auto; object-fit: contain; margin: auto auto 0; padding-top: 24px; mask-image: none; }
 .synky-shell.reference-fidelity-shell .meetings-entry-companies { padding: 20px; gap: 16px; border: 1px solid #e1e8ed; border-radius: 12px; background: #fff; }
 
+/* Company names can use two lines without overlapping the caption or logo. */
+.premium-sidebar .premium-sidebar-brand { flex-shrink: 0; min-width: 0; }
+.premium-sidebar .premium-product-logo.tenant-product-logo { height: auto; min-height: 28px; min-width: 0; }
+.premium-sidebar .tenant-product-logo .tenant-company-wordmark {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  max-height: none;
+  line-height: 1.35;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.premium-sidebar .premium-product-caption { flex-shrink: 0; }
+
 /* Decorative artwork follows the content so it cannot cover buttons or labels. */
 .synky-shell.reference-fidelity-shell .growth-entry-setup { display: flex; flex-direction: column; min-height: 0; padding: 28px; }
 .synky-shell.reference-fidelity-shell .growth-reference-art { position: static; width: 100%; max-width: 400px; height: auto; margin: auto auto 0; padding-top: 24px; object-fit: contain; mask-image: none; }
