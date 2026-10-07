@@ -2,7 +2,7 @@
 
 import { ArrowRight, BarChart3, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { latestProgress, priorityFor } from "@/lib/traction-flow";
+import { decisionsForCycle, latestProgress, priorityFor } from "@/lib/traction-flow";
 import type { TractionRecord } from "@/lib/traction-model";
 import type { SectionProps } from "./traction-types";
 
@@ -16,7 +16,7 @@ export function TractionReportActions({ records, onNavigate, onCreate, canCreate
   const results = active(records, "result").filter((item) => priorities.some((priority) => priority.id === item.data.priorityId));
   const roles = active(records, "role");
   const risks = active(records, "risk").filter((item) => item.data.status !== "Resolvido" && priorityIds.has(priorityFor(item, records)));
-  const decisions = active(records, "decision").filter((item) => item.data.status !== "Concluída" && priorityIds.has(priorityFor(item, records)));
+  const decisions = decisionsForCycle(records, cycle?.id).filter((item) => item.data.status !== "Concluída");
   const items: { title: string; detail: string; label: string; run: () => void }[] = [];
   if (!cycle) items.push({ title: "Iniciar um ciclo", detail: "Defina o período e o foco para que os indicadores tenham contexto.", label: "Abrir planejamento", run: () => onNavigate("planning") });
   else if (!objectives.length) items.push({ title: "Definir o objetivo do ciclo", detail: "Registre a direção antes de distribuir prioridades.", label: canCreate("objective") ? "Criar objetivo" : "Abrir planejamento", run: () => canCreate("objective") ? onCreate("objective", undefined, { cycleId: cycle.id }) : onNavigate("planning") });

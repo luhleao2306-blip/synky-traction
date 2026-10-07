@@ -1,5 +1,5 @@
 import type { TractionRecord } from "./traction-model";
-import { latestProgress, priorityFor } from "./traction-flow";
+import { decisionsForCycle, latestProgress, priorityFor } from "./traction-flow";
 
 export type ReportPlan = "gratuito" | "completo";
 export type ReportItem = { title: string; detail: string; context?: string };
@@ -42,7 +42,7 @@ export function buildTractionReport(records: TractionRecord[], organization: str
   const currentPriorityIds = new Set(currentPriorities.map((record) => record.id));
   const currentResults = results.filter((record) => currentPriorityIds.has(record.data.priorityId));
   const currentRisks = risks.filter((record) => currentPriorityIds.has(priorityFor(record, records)) && record.data.status !== "Resolvido");
-  const currentDecisions = decisions.filter((record) => currentPriorityIds.has(priorityFor(record, records)) && record.data.status !== "Concluída");
+  const currentDecisions = decisionsForCycle(records, currentCycle?.id).filter((record) => record.data.status !== "Concluída");
   const names = new Map(records.map((record) => [record.id, record.title]));
   const name = (id?: string) => id ? names.get(id) || "Vínculo indisponível" : "Não vinculado";
   const completeRoles = roles.filter((record) => record.data.mission && record.data.competencies && record.data.criteria);

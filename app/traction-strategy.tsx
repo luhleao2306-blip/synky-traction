@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ArrowRight, CalendarDays, Clock3, Plus, Printer, Target, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { latestPriorityProgress, latestProgress, priorityFor, reviewAgenda, savedReviewAgenda } from "@/lib/traction-flow";
+import { decisionsForCycle, latestPriorityProgress, latestProgress, priorityFor, reviewAgenda, savedReviewAgenda } from "@/lib/traction-flow";
 import type { TractionRecord } from "@/lib/traction-model";
 import type { SectionProps } from "./traction-types";
 import { TractionInsightBoard } from "./traction-insight-board";
@@ -113,7 +113,7 @@ export function StrategyPlanning(props: SectionProps) {
   const results = active(records, "result").filter((item) => ids.has(item.data.priorityId));
   const initiatives = active(records, "initiative").filter((item) => ids.has(item.data.priorityId));
   const risks = active(records, "risk").filter((item) => ids.has(priorityFor(item, records)));
-  const decisions = active(records, "decision").filter((item) => ids.has(priorityFor(item, records)));
+  const decisions = decisionsForCycle(records, cycle?.id);
   const ownerLoads = Object.entries(priorities.reduce<Record<string, number>>((loads, item) => {
     if (item.data.owner) loads[item.data.owner] = (loads[item.data.owner] || 0) + 1;
     return loads;

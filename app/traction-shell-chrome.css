@@ -103,3 +103,26 @@
   .synky-shell .app-header .header-right > a[data-slot=button] { flex: 1; min-width: 0; white-space: normal; height: auto; min-height: 38px; text-align: center; }
 }
 @media print { .synky-shell .app-header { display: none !important; } }
+
+/* Readable working surfaces; tenant color remains the single action accent. */
+.synky-shell .panel-head h2 { font-size: 1.25rem; line-height: 1.4; font-weight: 650; letter-spacing: -.015em; }
+.synky-shell .panel-head p { font-size: .9375rem; line-height: 1.6; }
+.synky-shell :is(.work-queue-table,.structure-role-table,.promotion-table,.team-table) { font-size: .9375rem; line-height: 1.5; }
+.synky-shell .team-table th { font-size: .875rem; letter-spacing: normal; padding-block: 16px; }
+.synky-shell :is(.team-filters label,.team-access-label,.team-status,.team-table td>strong,.team-task-card p) { font-size: .875rem; line-height: 1.5; }
+.synky-shell :is(.team-task-card strong,.team-person-link strong) { font-size: 1rem; line-height: 1.4; }
+.synky-shell .team-metrics span { font-size: .875rem; }
+.synky-shell .team-task-card { transition: border-color .15s, box-shadow .15s; }
+.synky-shell .team-task-card:hover { border-color: var(--tenant-primary); box-shadow: 0 3px 12px #173b2e0a; }
+.synky-shell .work-queue-table tbody tr:hover { background: #f6f9f7; }
+.synky-shell .work-queue-table td:first-child button { width: 100%; }
+.synky-shell .work-queue-table td:first-child button:focus-visible { outline: 2px solid var(--tenant-primary); outline-offset: 3px; border-radius: 6px; }
+.premium-sidebar .premium-sidebar-brand,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-sidebar-brand { padding-block: 16px; gap: 8px; }
+.premium-sidebar .tenant-identity.has-logo { gap: 8px; }
+.premium-sidebar .tenant-identity-visual img { max-height: 36px; }
+.premium-sidebar .premium-sidebar-brand .premium-product-caption,
+.synky-shell.reference-fidelity-shell .premium-sidebar .premium-sidebar-brand .premium-product-caption { font-size: .8125rem; line-height: 1.4; }
+.record-studio :is(.record-review-title,.record-review-group) button { min-height: 36px; padding-inline: 10px; border-radius: 6px; }
+.record-studio :is(.record-review-title,.record-review-group) button:hover { background: var(--workspace-soft,#eef5f1); }
+.record-studio :is(.record-review-title,.record-review-group) button:focus-visible { outline: 2px solid var(--tenant-primary,#087f5b); outline-offset: 2px; }

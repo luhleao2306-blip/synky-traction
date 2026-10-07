@@ -62,7 +62,7 @@ export async function getSynkyUser(request?: Request): Promise<SynkyUser | null>
   if (!token || !/^[A-Za-z0-9._-]{100,4096}$/.test(token)) return null;
   let response: Response;
   try {
-    response = await fetch("https://synky-hub.contato146558.chatgpt.site/api/grants/check", {
+    response = await fetch("https://one.synky.com.br/api/grants/check", {
       method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
       body: JSON.stringify({ product: "traction" }), cache: "no-store",
     });

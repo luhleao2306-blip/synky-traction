@@ -1,6 +1,14 @@
 import type { TractionRecord } from "./traction-model";
+import { recordCycle } from "./traction-permissions";
 
 export type AgendaItem = { id: string; kind: TractionRecord["kind"]; title: string; reason: string; priorityId?: string };
+
+export function decisionsForCycle(records: TractionRecord[], cycleId?: string) {
+  if (!cycleId) return [];
+  const visible = records.filter((record) => !record.archived_at);
+  const byId = new Map(visible.map((record) => [record.id, record]));
+  return visible.filter((record) => record.kind === "decision" && recordCycle(record, byId) === cycleId);
+}
 
 export function priorityFor(record: TractionRecord, records: TractionRecord[]): string {
   if (record.kind === "priority") return record.id;
@@ -31,6 +39,7 @@ export function reviewAgenda(records: TractionRecord[], cycleId: string, today =
   const active = records.filter((item) => !item.archived_at);
   const priorities = active.filter((item) => item.kind === "priority" && item.data.cycleId === cycleId);
   const ids = new Set(priorities.map((item) => item.id));
+  const decisionIds = new Set(decisionsForCycle(active, cycleId).map((item) => item.id));
   const items: AgendaItem[] = [];
   const add = (record: TractionRecord, reason: string, priorityId = priorityFor(record, active)) => items.push({ id: record.id, kind: record.kind, title: record.title, reason, priorityId });
   for (const priority of priorities) {
@@ -45,6 +54,10 @@ export function reviewAgenda(records: TractionRecord[], cycleId: string, today =
   }
   for (const item of active) {
     const priorityId = priorityFor(item, active);
+    if (item.kind === "decision") {
+      if (item.data.status !== "Concluída" && decisionIds.has(item.id)) add(item, `Decisão pendente${item.data.due && item.data.due < today ? " e atrasada" : ""}`, priorityId);
+      continue;
+    }
     if (!ids.has(priorityId)) continue;
     if (item.kind === "initiative" && item.data.status !== "Concluída") {
       if (!item.data.owner) add(item, "Iniciativa sem responsável", priorityId);
@@ -52,7 +65,6 @@ export function reviewAgenda(records: TractionRecord[], cycleId: string, today =
       if (item.data.status === "Atenção") add(item, `Iniciativa em risco: ${item.data.riskReason || "motivo não informado"}`, priorityId);
     }
     if (item.kind === "risk" && item.data.status !== "Resolvido") add(item, `Impedimento: ${item.data.impact || "impacto não definido"}`, priorityId);
-    if (item.kind === "decision" && item.data.status !== "Concluída") add(item, `Decisão pendente${item.data.due && item.data.due < today ? " e atrasada" : ""}`, priorityId);
     if (item.kind === "progress" && item.data.status === "Bloqueado") {
       const targetId = item.data.resultId || item.data.initiativeId || item.data.priorityId;
       if (latestProgress(active, targetId)?.id === item.id) add(item, "Atualização bloqueada", priorityId);

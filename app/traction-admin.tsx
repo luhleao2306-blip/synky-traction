@@ -22,6 +22,7 @@ const auditLabels: Record<string, string> = {
   created: "Registro criado", updated: "Registro atualizado", archived: "Registro arquivado", restored: "Registro restaurado",
   organization_created: "Empresa criada", settings_updated: "Empresa alterada", brand_updated: "Cores alteradas", brand_logo_updated: "Logo alterada", brand_logo_removed: "Logo removida",
   member_invited: "Acesso cadastrado", member_login_created: "Login criado", member_updated: "Acesso atualizado", member_removed: "Acesso removido", personal_data_removed: "Dados pessoais removidos",
+  person_hired: "Contratação confirmada", person_promoted: "Promoção registrada",
 };
 
 const date = (value?: string) => value ? new Date(`${value.slice(0, 10)}T12:00:00`).toLocaleDateString("pt-BR") : "Data não informada";

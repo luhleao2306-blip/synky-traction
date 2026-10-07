@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, BriefcaseBusiness, CheckCircle2, ChevronDown, GitBranch, Sparkles, Target } from "lucide-react";
-import { latestPriorityProgress, priorityFor } from "@/lib/traction-flow";
+import { decisionsForCycle, latestPriorityProgress, priorityFor } from "@/lib/traction-flow";
 import type { TractionRecord } from "@/lib/traction-model";
 import type { Section, SectionProps } from "./traction-types";
 
@@ -32,7 +32,7 @@ export function TractionInsightBoard({ records, workspace, onOpen, onCreate, can
     const objectives = live(records, "objective").filter((item) => item.data.cycleId === cycle.id);
     if (!objectives.length && canCreate("objective")) add("execution", "objective-start", "Defina o objetivo do ciclo", "Sem objetivo, as prioridades ficam sem uma direção comum.", "Criar objetivo", () => onCreate("objective", undefined, { cycleId: cycle.id }));
     else if (!priorities.length && canCreate("priority")) add("execution", "priority-start", "Escolha a primeira prioridade", "Transforme o objetivo em uma entrega com responsável e prazo.", "Criar prioridade", () => onCreate("priority", undefined, { cycleId: cycle.id }));
-    for (const item of live(records, "decision")) if (item.data.status !== "Concluída" && overdue(item.data.due) && priorityIds.has(priorityFor(item, records))) add("execution", `decision-${item.id}`, item.title, `Decisão vencida; responsável: ${item.data.decisionMaker || "a definir"}.`, "Abrir decisão", () => onOpen(item));
+    for (const item of decisionsForCycle(records, cycle.id)) if (item.data.status !== "Concluída" && overdue(item.data.due)) add("execution", `decision-${item.id}`, item.title, `Decisão vencida; responsável: ${item.data.decisionMaker || "a definir"}.`, "Abrir decisão", () => onOpen(item));
     for (const item of live(records, "risk")) if (item.data.status !== "Resolvido" && priorityIds.has(priorityFor(item, records))) add("execution", `risk-${item.id}`, item.title, item.data.impact || "Risco ainda em tratamento.", "Tratar risco", () => onOpen(item));
     for (const item of priorities) {
       if (!results.some((result) => result.data.priorityId === item.id)) add("execution", `result-${item.id}`, item.title, "Ainda não há um resultado verificável para esta prioridade.", "Definir resultado", () => canCreate("result") ? onCreate("result", undefined, { priorityId: item.id }) : onOpen(item));
