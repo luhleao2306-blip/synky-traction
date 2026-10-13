@@ -7,6 +7,7 @@ import { Building2, ImagePlus, Palette, RotateCcw, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { brandPresets, contrastWithWhite, defaultBrand, validBrandColor } from "@/lib/traction-brand";
+import { readBrandLogo } from "@/lib/traction-logo";
 import type { Workspace } from "./traction-types";
 
 type Props = { workspace: Workspace | null; demo: boolean; onPost: (payload: Record<string, unknown>) => Promise<unknown>; onReload: () => Promise<void>; onCreateOrganization: () => void };
@@ -19,6 +20,7 @@ export function BrandStudio({ workspace, demo, onPost, onReload, onCreateOrganiz
   const [previewUrl, setPreviewUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [checkingLogo, setCheckingLogo] = useState(false);
   const logoUrl = previewUrl || workspace?.organization.brand_logo_url || "";
   const primaryValid = validBrandColor(primary);
   const sidebarValid = validBrandColor(sidebar, 0.14);
@@ -27,14 +29,19 @@ export function BrandStudio({ workspace, demo, onPost, onReload, onCreateOrganiz
 
   useEffect(() => () => { if (previewUrl) URL.revokeObjectURL(previewUrl); }, [previewUrl]);
 
-  function chooseFile(next: File | undefined) {
+  async function chooseFile(next: File | undefined) {
     if (!next) return;
-    if (!["image/png", "image/jpeg", "image/webp"].includes(next.type) || next.size > 2 * 1024 * 1024) {
-      toast.error("Escolha uma imagem PNG, JPG ou WebP de até 2 MB.");
-      return;
-    }
-    setFile(next);
-    setPreviewUrl(URL.createObjectURL(next));
+    setCheckingLogo(true);
+    try {
+      const image = await readBrandLogo(next);
+      if ("error" in image) throw new Error(image.error);
+      const decoded = await createImageBitmap(next);
+      decoded.close();
+      setFile(next);
+      setPreviewUrl(URL.createObjectURL(next));
+    } catch (error) {
+      toast.error(error instanceof Error && /^(Envie|Formato|A imagem)/.test(error.message) ? error.message : "Não foi possível abrir essa imagem. Escolha outra logo PNG, JPG ou WebP.");
+    } finally { setCheckingLogo(false); }
   }
 
   async function saveColors() {
@@ -79,7 +86,7 @@ export function BrandStudio({ workspace, demo, onPost, onReload, onCreateOrganiz
     <div className="brand-studio-grid">
       <div className="brand-controls">
         <div><strong className="brand-control-title">Logo da empresa</strong><p className="brand-control-hint">Envie PNG, JPG ou WebP com até 2 MB. Uma versão horizontal ou quadrada funciona melhor.</p></div>
-        <div className="brand-upload-row"><div className="brand-logo-tile">{logoUrl ? <img src={logoUrl} alt={`Logo de ${workspace?.organization.name || "empresa"}`} /> : <Building2 size={29} />}</div><div className="brand-upload-actions"><label className="brand-file-button"><ImagePlus size={16} /> Escolher imagem<input type="file" accept="image/png,image/jpeg,image/webp" disabled={demo || uploading} onChange={(event) => chooseFile(event.target.files?.[0])} /></label>{file && <Button variant="outline" size="sm" disabled={uploading} onClick={() => changeLogo("upload")}><Upload size={15} />{uploading ? "Enviando…" : "Salvar logo"}</Button>}{!file && workspace?.organization.brand_logo_url && <Button variant="ghost" size="sm" disabled={uploading} onClick={() => changeLogo("remove")}>Remover logo</Button>}</div></div>
+        <div className="brand-upload-row"><div className="brand-logo-tile">{logoUrl ? <img src={logoUrl} alt={`Logo de ${workspace?.organization.name || "empresa"}`} /> : <Building2 size={29} />}</div><div className="brand-upload-actions"><label className="brand-file-button"><ImagePlus size={16} />{checkingLogo ? "Conferindo imagem…" : "Escolher imagem"}<input type="file" accept="image/png,image/jpeg,image/webp" disabled={demo || uploading || checkingLogo} onChange={(event) => { void chooseFile(event.target.files?.[0]); event.target.value = ""; }} /></label>{file && <Button variant="outline" size="sm" disabled={uploading || checkingLogo} onClick={() => changeLogo("upload")}><Upload size={15} />{uploading ? "Enviando…" : "Salvar logo"}</Button>}{!file && workspace?.organization.brand_logo_url && <Button variant="ghost" size="sm" disabled={uploading || checkingLogo} onClick={() => changeLogo("remove")}>Remover logo</Button>}</div></div>
         <div className="brand-palette-label"><strong className="brand-control-title">Paletas prontas</strong><span>Escolha um ponto de partida</span></div>
         <div className="brand-presets">{brandPresets.map((preset) => <button key={preset.name} type="button" className={primary.toUpperCase() === preset.primary.toUpperCase() && sidebar.toUpperCase() === preset.sidebar.toUpperCase() ? "selected" : ""} onClick={() => { setPrimary(preset.primary); setSidebar(preset.sidebar); }} aria-label={`Usar paleta ${preset.name}`}><i style={{ background: preset.sidebar }} /><i style={{ background: preset.primary }} /><span>{preset.name}</span></button>)}</div>
         <div className="brand-color-fields"><label className="field-label">Cor principal<div className="brand-color-input"><input type="color" value={primary} onChange={(event) => setPrimary(event.target.value)} aria-label="Escolher cor principal" /><Input aria-label="Código da cor principal" value={primary} onChange={(event) => setPrimary(event.target.value)} maxLength={7} /></div><small className={primaryValid ? "brand-contrast-pass" : "brand-contrast-fail"}>{primaryContrast === null ? "Use uma cor hexadecimal válida." : `${primaryContrast.toFixed(1)}:1 com texto branco · ${primaryValid ? "legível" : "contraste insuficiente"}`}</small></label><label className="field-label">Cor de apoio<div className="brand-color-input"><input type="color" value={sidebar} onChange={(event) => setSidebar(event.target.value)} aria-label="Escolher cor de apoio" /><Input aria-label="Código da cor de apoio" value={sidebar} onChange={(event) => setSidebar(event.target.value)} maxLength={7} /></div><small className={sidebarValid ? "brand-contrast-pass" : "brand-contrast-fail"}>{sidebarContrast === null ? "Use uma cor hexadecimal válida." : `${sidebarContrast.toFixed(1)}:1 com texto branco · ${sidebarValid ? "legível" : "contraste insuficiente"}`}</small></label></div>

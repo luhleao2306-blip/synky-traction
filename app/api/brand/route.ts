@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { getSynkyUser, sameOrigin, isMasterAdmin } from "@/app/synky-auth";
+import { readBrandLogo } from "@/lib/traction-logo";
 
 export const dynamic = "force-dynamic";
 
@@ -15,13 +16,6 @@ async function access(organizationId: string, userId: string, email: string) {
   return db().prepare("SELECT m.role, o.brand_logo_key, o.brand_logo_type FROM memberships m JOIN organizations o ON o.id = m.organization_id WHERE m.organization_id = ? AND (m.user_id = ? OR m.email = ?) LIMIT 1")
     .bind(organizationId, userId, email.toLowerCase()).first<BrandRow & { role: string }>();
 }
-function imageType(bytes: Uint8Array): string | null {
-  if (bytes.length >= 8 && [137, 80, 78, 71, 13, 10, 26, 10].every((byte, index) => bytes[index] === byte)) return "image/png";
-  if (bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255) return "image/jpeg";
-  if (bytes.length >= 12 && String.fromCharCode(...bytes.slice(0, 4)) === "RIFF" && String.fromCharCode(...bytes.slice(8, 12)) === "WEBP") return "image/webp";
-  return null;
-}
-
 export async function GET(request: Request) {
   const user = await getSynkyUser(request);
   if (!user) return fail("Entre na sua conta para continuar.", 401);
@@ -59,17 +53,15 @@ export async function POST(request: Request) {
       return Response.json({ ok: true });
     }
     if (action !== "upload") return fail("Ação inválida.");
-    const file = form.get("logo");
-    if (!(file instanceof File) || file.size === 0 || file.size > 2 * 1024 * 1024) return fail("Envie uma imagem PNG, JPG ou WebP de até 2 MB.");
-    const bytes = new Uint8Array(await file.arrayBuffer());
-    const contentType = imageType(bytes);
-    if (!contentType || file.type !== contentType) return fail("Formato de imagem inválido. Use PNG, JPG ou WebP.");
+    const image = await readBrandLogo(form.get("logo"));
+    if ("error" in image) return fail(image.error);
+    const { bytes, contentType } = image;
     const key = `organizations/${organizationId}/logos/${crypto.randomUUID()}`;
     await storage.put(key, bytes, { httpMetadata: { contentType } });
     try {
       await db().batch([
         db().prepare("UPDATE organizations SET brand_logo_key = ?, brand_logo_type = ? WHERE id = ?").bind(key, contentType, organizationId),
-        db().prepare("INSERT INTO audit_events (id, organization_id, action, actor, after) VALUES (?, ?, 'brand_logo_updated', ?, ?)").bind(crypto.randomUUID(), organizationId, user.userId, JSON.stringify({ contentType, size: file.size })),
+        db().prepare("INSERT INTO audit_events (id, organization_id, action, actor, after) VALUES (?, ?, 'brand_logo_updated', ?, ?)").bind(crypto.randomUUID(), organizationId, user.userId, JSON.stringify({ contentType, size: bytes.length })),
       ]);
     } catch (error) { await storage.delete(key); throw error; }
     if (member.brand_logo_key) try { await storage.delete(member.brand_logo_key); } catch (error) { console.error("brand cleanup", error); }
