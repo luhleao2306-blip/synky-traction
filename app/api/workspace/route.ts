@@ -1,4 +1,4 @@
-import { recordArea as areaOf, recordCycle as cycleOf, canReadRecord as canRead, canWriteRecord as canWrite } from "@/lib/traction-permissions";
+import { recordArea as areaOf, recordCycle as cycleOf, canReadRecord as canRead, canWriteRecord as canWrite, canCreateRecord as canCreate } from "@/lib/traction-permissions";
 import { env } from "cloudflare:workers";
 import { getSynkyUser, findUser, newPasswordHash, temporaryPassword, sameOrigin, isMasterAdmin } from "@/app/synky-auth";
 import { allowedFields, recordKinds, references, type RecordKind, type TractionRecord } from "@/lib/traction-model";
@@ -7,6 +7,7 @@ import { reviewAgenda } from "@/lib/traction-flow";
 import { defaultBrand, validBrandColor } from "@/lib/traction-brand";
 import { readBrandLogo } from "@/lib/traction-logo";
 import { teamOperation } from "@/lib/traction-team";
+import { createsCircularLink, isFutureObservation } from "@/lib/traction-record-validation";
 
 export const dynamic = "force-dynamic";
 
@@ -116,6 +117,7 @@ async function validateBusinessRules(kind: RecordKind, data: Record<string, stri
   if (kind === "progress") {
     const targets = [data.priorityId, data.resultId, data.initiativeId].filter(Boolean);
     if (targets.length !== 1 || !data.observedAt || !data.note) return "Vincule a atualização a um item e informe data e contexto.";
+    if (isFutureObservation(data.observedAt)) return "A data de uma observação não pode estar no futuro.";
     if (data.resultId && !data.value?.trim()) return "Informe o valor observado do resultado.";
     if (data.resultId && byId.get(data.resultId)?.data.measureType === "Número" && !Number.isFinite(Number(data.value))) return "Informe um valor numérico para este indicador.";
     if (["Em risco", "Bloqueado"].includes(data.status) && (!data.riskReason || !data.nextAction)) return "Informe o motivo e a próxima ação para um item em risco ou bloqueado.";
@@ -442,6 +444,8 @@ export async function POST(request: Request) {
       if (current && kind === "priority" && current.data.position !== data.position && (!data.changeReason || data.changeReason === current.data.changeReason)) return fail("Explique a mudança de ordem com uma nova justificativa.");
       if (kind === "review" && data.status === "Concluída" && !data.summary) return fail("Registre o resumo para concluir a revisão.");
       if (!(await validateLinks(organizationId, kind, data, id))) return fail("Um vínculo pertence a outra empresa, está arquivado ou não existe.");
+      if (kind === "area" && createsCircularLink(id, data.parentAreaId, "parentAreaId", byId)) return fail("A área superior não pode ser uma subárea dela mesma.");
+      if (["objective", "initiative"].includes(kind) && createsCircularLink(id, data.dependsOnId, "dependsOnId", byId)) return fail("A dependência não pode criar um círculo entre os registros.");
       const issue = await validateBusinessRules(kind, data, complete);
       if (issue) return fail(issue);
       if (kind === "updateRequest" && member.role !== "admin" && member.role !== "direcao") {
@@ -459,7 +463,7 @@ export async function POST(request: Request) {
         return linkedArea && linkedArea !== member.area_id;
       })) return fail("Um dos vínculos pertence a outra área.", 403);
       const nextRecord: TractionRecord = { id, organization_id: organizationId, kind, title, data, created_at: "", updated_at: "", version: current?.version || 1, archived_at: null };
-      if (!canWrite(member, nextRecord, byId) || (current && !canWrite(member, current, byId))) return fail("Você não tem permissão para alterar este registro.", 403);
+      if (!(current ? canWrite(member, nextRecord, byId) : canCreate(member, nextRecord, byId)) || (current && !canWrite(member, current, byId))) return fail("Você não tem permissão para alterar este registro.", 403);
       const encoded = JSON.stringify(data);
       if (!current) {
         const statements = [

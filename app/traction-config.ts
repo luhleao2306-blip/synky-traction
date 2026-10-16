@@ -1,4 +1,5 @@
 import type { RecordKind, TractionRecord } from "@/lib/traction-model";
+import { createsCircularLink } from "@/lib/traction-record-validation";
 
 export type FormField = {
   key: string;
@@ -13,6 +14,7 @@ export type FormField = {
 const fixed = (values: string[]) => values.map((value) => ({ value, label: value }));
 
 export function formSpec(kind: RecordKind, records: TractionRecord[], personType: "Candidato" | "Colaborador", data: Record<string, string> = {}, ownId?: string) {
+  const byId = new Map(records.map(record => [record.id, record]));
   const options = (target: RecordKind, filter?: (record: TractionRecord) => boolean) => records.filter((record) => record.kind === target && record.id !== ownId && !record.archived_at && (!filter || filter(record))).map((record) => ({ value: record.id, label: record.title }));
   const linked = (id?: string) => records.find((record) => record.id === id);
   const fields: Record<RecordKind, FormField[]> = {
@@ -32,11 +34,11 @@ export function formSpec(kind: RecordKind, records: TractionRecord[], personType
       { key: "ownerEmail", label: "Email do responsável" },
       { key: "description", label: "Direção e justificativa", type: "textarea" },
       { key: "rationale", label: "Por que este objetivo importa?", type: "textarea" },
-      { key: "dependsOnId", label: "Depende de outro objetivo", type: "select", options: options("objective", (record) => !data.cycleId || record.data.cycleId === data.cycleId) },
+      { key: "dependsOnId", label: "Depende de outro objetivo", type: "select", options: options("objective", (record) => (!data.cycleId || record.data.cycleId === data.cycleId) && !createsCircularLink(ownId, record.id, "dependsOnId", byId)) },
       { key: "status", label: "Situação", type: "select", options: fixed(["Ativo", "Concluído", "Suspenso"]) },
     ],
     area: [
-      { key: "parentAreaId", label: "Área superior", type: "select", options: options("area") },
+      { key: "parentAreaId", label: "Área superior", type: "select", options: options("area", (record) => !createsCircularLink(ownId, record.id, "parentAreaId", byId)) },
       { key: "lead", label: "Responsável pela área" },
       { key: "mission", label: "Papel da área", type: "textarea", placeholder: "Qual resultado esta equipe entrega?" },
     ],
@@ -119,7 +121,7 @@ export function formSpec(kind: RecordKind, records: TractionRecord[], personType
       { key: "team", label: "Equipe envolvida", placeholder: "Áreas ou pessoas que participam da entrega" },
       { key: "due", label: "Prazo", type: "date" },
       { key: "milestones", label: "Marcos principais", type: "textarea" },
-      { key: "dependsOnId", label: "Depende de outra iniciativa", type: "select", options: options("initiative", (record) => !data.priorityId || linked(record.data.priorityId)?.data.cycleId === linked(data.priorityId)?.data.cycleId) },
+      { key: "dependsOnId", label: "Depende de outra iniciativa", type: "select", options: options("initiative", (record) => (!data.priorityId || linked(record.data.priorityId)?.data.cycleId === linked(data.priorityId)?.data.cycleId) && !createsCircularLink(ownId, record.id, "dependsOnId", byId)) },
       { key: "update", label: "Última atualização", type: "textarea" },
       { key: "status", label: "Situação", type: "select", options: fixed(["Planejada", "Em andamento", "Atenção", "Concluída"]) },
       { key: "riskReason", label: "Motivo da atenção", type: "textarea" },

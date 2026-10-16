@@ -63,3 +63,10 @@ export function canWriteRecord(scope: AccessScope, record: TractionRecord, byId:
   }
   return true;
 }
+
+export function canCreateRecord(scope: AccessScope, record: TractionRecord, byId: Map<string, TractionRecord>) {
+  // Assigned work can be updated by its responsible person, but only managers
+  // create assignments. This matches the creation actions exposed in the panel.
+  if (scope.role === "responsavel" && record.kind !== "progress") return false;
+  return canWriteRecord(scope, record, byId);
+}

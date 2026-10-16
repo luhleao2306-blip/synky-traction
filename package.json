@@ -6,6 +6,8 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "test:records": "node --experimental-strip-types --test tests/traction-record-validation.test.mjs",
+    "test:permissions": "node --experimental-strip-types --test tests/traction-permissions.test.mjs",
     "test:logo": "node --experimental-strip-types --test tests/traction-logo.test.mjs",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "node scripts/run-framework.mjs dev",

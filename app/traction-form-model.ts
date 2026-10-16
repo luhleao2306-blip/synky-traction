@@ -1,5 +1,6 @@
 import type { RecordKind, TractionRecord } from "@/lib/traction-model";
 import type { FormField } from "./traction-config";
+import { createsCircularLink, isFutureObservation } from "@/lib/traction-record-validation";
 
 export const formGroups: Record<RecordKind, { title: string; description: string; keys: string[] }[]> = {
   cycle: [{title:"Período",description:"Escolha quando o ciclo começa e termina.",keys:["startDate","endDate","status","cadence"]},{title:"Direção",description:"Defina o contexto e a direção do trabalho.",keys:["description","vision"]},{title:"Encerramento",description:"Registre o que aprendemos e o que vem depois.",keys:["learnings","carryForward"]}],
@@ -59,6 +60,10 @@ export function recordFormErrors(kind:RecordKind,title:string,data:Record<string
   const numeric=kind==="result" && data.measureType==="Número" ? ["baseline","target"] : kind==="progress" && records.find(r=>r.id===data.resultId)?.data.measureType==="Número" ? ["value"] : [];
   for(const key of numeric) if(data[key]?.trim() && !Number.isFinite(Number(data[key]))) errors[key]="Informe um número válido. Use ponto para casas decimais.";
   if(kind==="progress" && [data.priorityId,data.resultId,data.initiativeId].filter(Boolean).length!==1) errors.priorityId="Escolha exatamente um item para atualizar.";
+  if(kind==="progress" && isFutureObservation(data.observedAt || "")) errors.observedAt="A data de uma observação não pode estar no futuro.";
+  const byId=new Map(records.map(record=>[record.id,record]));
+  if(kind==="area" && createsCircularLink(previous?.id,data.parentAreaId||"","parentAreaId",byId)) errors.parentAreaId="A área superior não pode ser uma subárea dela mesma.";
+  if(["objective","initiative"].includes(kind) && createsCircularLink(previous?.id,data.dependsOnId||"","dependsOnId",byId)) errors.dependsOnId="A dependência não pode criar um círculo entre os registros.";
   if(kind==="risk" && !data.priorityId && !data.initiativeId) errors.priorityId="Selecione uma prioridade ou uma iniciativa.";
   if(previous && kind==="priority" && data.position!==previous.data.position && (!data.changeReason?.trim() || data.changeReason.trim()===previous.data.changeReason?.trim())) errors.changeReason="Adicione uma nova justificativa para a mudança de ordem.";
   if(previous && kind==="result" && data.target!==previous.data.target && (!data.changeReason?.trim() || data.changeReason.trim()===previous.data.changeReason?.trim())) errors.changeReason="Adicione uma nova justificativa para a alteração do alvo.";

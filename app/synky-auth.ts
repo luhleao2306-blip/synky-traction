@@ -1,12 +1,12 @@
 import { env } from "cloudflare:workers";
 import { headers } from "next/headers";
+import { hasMasterAccess } from "../lib/one-master";
 
-export type SynkyUser = { userId: string; email: string; displayName: string };
-// Master access is pinned to an existing account ID in server configuration.
-// It cannot be granted by changing an email, a company role, or browser state.
+export type SynkyUser = { userId: string; email: string; displayName: string; oneAdministrator?: boolean };
+// Native master remains pinned; One owners are verified live by the central server.
 export function isMasterAdmin(user: SynkyUser) {
   const masterId = (env as typeof env & { SYNKY_MASTER_USER_ID?: string }).SYNKY_MASTER_USER_ID;
-  return !!masterId && user.userId === masterId;
+  return hasMasterAccess(user, masterId);
 }
 type UserRow = { id: string; email: string; name: string; password_hash: string; password_salt: string; password_iterations: number };
 
@@ -68,9 +68,9 @@ export async function getSynkyUser(request?: Request): Promise<SynkyUser | null>
     });
   } catch { return null; }
   if (!response.ok) return null;
-  const identity = await response.json() as { email: string; name: string };
+  const identity = await response.json() as { email: string; name: string; is_admin?: boolean };
   const row = await authDb().prepare("SELECT id,email,name FROM app_users WHERE email=? LIMIT 1").bind(identity.email).first<{ id: string; email: string; name: string }>();
-  return row ? { userId: row.id, email: row.email, displayName: row.name } : null;
+  return row ? { userId: row.id, email: row.email, displayName: row.name, oneAdministrator: identity.is_admin === true } : null;
 }
 
 export async function findUser(email: string) {

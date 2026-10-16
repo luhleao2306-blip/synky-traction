@@ -1,4 +1,4 @@
-import { authDb, findUser, newPasswordHash, temporaryPassword } from "@/app/synky-auth";
+import { authDb, findUser, newPasswordHash, temporaryPassword, clearSessionCookie } from "@/app/synky-auth";
 
 const HUB = "https://one.synky.com.br";
 const HUB_ORIGINS = new Set([HUB, "https://synky-hub.contato146558.chatgpt.site"]);
@@ -22,5 +22,10 @@ export async function POST(request: Request) {
       .bind(crypto.randomUUID(), identity.email, identity.name, secret.hash, secret.salt, secret.iterations).run();
   }
   const cookie = `__Host-synky_one_access=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=3600`;
-  return new Response(null, { status: 303, headers: { location: "/painel", "set-cookie": cookie, "cache-control": "no-store", "referrer-policy": "no-referrer" } });
+  const responseHeaders = new Headers({ location: "/painel", "cache-control": "no-store", "referrer-policy": "no-referrer" });
+  responseHeaders.append("set-cookie", cookie);
+  // The account explicitly chosen in One must not be shadowed by an older native login.
+  responseHeaders.append("set-cookie", clearSessionCookie(request));
+  responseHeaders.append("set-cookie", "synky_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0");
+  return new Response(null, { status: 303, headers: responseHeaders });
 }
